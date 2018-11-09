@@ -1,0 +1,10 @@
+.idea/
+
+target/
+
+.classpath
+.metadata/
+.settings/
+.project
+
+*.pdf
