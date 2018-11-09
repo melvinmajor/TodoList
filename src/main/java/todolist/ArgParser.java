@@ -1,35 +1,43 @@
 package todolist;
 
-import java.util.HashMap;
-import java.util.Map;
+import todolist.commands.*;
 
-import todolist.commands.AddCommand;
-import todolist.commands.Command;
-import todolist.commands.DoneCommand;
-import todolist.commands.EditCommand;
-import todolist.commands.HelpCommand;
-import todolist.commands.ListCommand;
-import todolist.commands.RemoveCommand;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ArgParser {
-	private static Map<String, Command> commandMap = new HashMap<>();
+    private static Map<String, Command> commandMap = new HashMap<>();
 
-	static {
-		commandMap.put("add", new AddCommand());
-		commandMap.put("ls", new ListCommand());
-		commandMap.put("rm", new RemoveCommand());
-		commandMap.put("edit", new EditCommand());
-		commandMap.put("done", new DoneCommand());
-		commandMap.put("help", new HelpCommand());
-	}
+    static {
+        commandMap.put("add", new AddCommand());
+        commandMap.put("ls", new ListCommand());
+        commandMap.put("rm", new RemoveCommand());
+        commandMap.put("edit", new EditCommand());
+        commandMap.put("done", new DoneCommand());
+        commandMap.put("help", new HelpCommand());
+    }
 
-	public static Command parse(String[] args) {
-		if (args.length == 0)
-			return commandMap.get("help");
+    public static Command parse(String[] args) {
+        var helpCommand = commandMap.get("help");
+        if (args.length == 0) return helpCommand;
 
-		Command command = commandMap.get(args[0].toLowerCase());
-		if (command != null)
-			return command;
-		return commandMap.get("help");
-	}
+        var command = match(args[0]);
+        return command == null ? helpCommand : command;
+    }
+
+    private static Command match(String s) {
+        var lower = s.toLowerCase();
+        List<String> matches = commandMap
+                .keySet()
+                .stream()
+                .filter(e -> e.startsWith(lower))
+                .collect(Collectors.toList());
+
+        if (matches.size() != 1) return null;
+
+        return commandMap.get(matches.get(0));
+    }
+
 }
