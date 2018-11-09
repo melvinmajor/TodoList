@@ -5,6 +5,7 @@ import todolist.commands.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ArgParser {
@@ -24,10 +25,10 @@ public class ArgParser {
         if (args.length == 0) return helpCommand;
 
         var command = match(args[0]);
-        return command == null ? helpCommand : command;
+        return command.orElse(helpCommand);
     }
 
-    private static Command match(String s) {
+    private static Optional<Command> match(String s) {
         var lower = s.toLowerCase();
         List<String> matches = commandMap
                 .keySet()
@@ -35,9 +36,10 @@ public class ArgParser {
                 .filter(e -> e.startsWith(lower))
                 .collect(Collectors.toList());
 
-        if (matches.size() != 1) return null;
+        if (matches.size() != 1) return Optional.empty();
 
-        return commandMap.get(matches.get(0));
+        var onlyMatch = commandMap.get(matches.get(0));
+        return Optional.of(onlyMatch);
     }
 
 }
