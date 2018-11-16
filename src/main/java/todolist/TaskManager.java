@@ -12,7 +12,7 @@ public class TaskManager {
     }
 
     public boolean removeTask(Task task) {
-        tasks.remove(task);
+        return tasks.remove(task);
     }
 
     public Collection<Task> getTasks() {
