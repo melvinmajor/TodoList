@@ -8,4 +8,11 @@ public class RemoveCommand implements Command {
 
 	}
 
+	public String name() {
+		return "rm";
+	}
+
+	public String usage() {
+		return "Remove a task.";
+	}
 }

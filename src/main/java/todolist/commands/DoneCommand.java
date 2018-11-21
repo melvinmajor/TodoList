@@ -8,4 +8,11 @@ public class DoneCommand implements Command {
 
 	}
 
+	public String name() {
+		return "done";
+	}
+
+	public String usage() {
+		return "Set a task as done.";
+	}
 }
