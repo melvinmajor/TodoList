@@ -8,4 +8,11 @@ public class ListCommand implements Command {
 
 	}
 
+	public String name() {
+		return "ls";
+	}
+
+	public String usage() {
+		return "List all tasks.";
+	}
 }

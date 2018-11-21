@@ -8,4 +8,11 @@ public class AddCommand implements Command {
 
 	}
 
+	public String name() {
+		return "add";
+	}
+
+	public String usage() {
+		return "Add a task.";
+	}
 }

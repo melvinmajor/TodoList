@@ -8,4 +8,11 @@ public class EditCommand implements Command {
 
 	}
 
+	public String name() {
+		return "edit";
+	}
+
+	public String usage() {
+		return "Edit a task.";
+	}
 }
