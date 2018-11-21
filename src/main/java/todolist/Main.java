@@ -7,7 +7,8 @@ import java.util.Map;
 
 public class Main {
     public static Map<String, Command> commandMap = new HashMap<>();
-
+    public static TaskManager taskManager = new TaskManager();
+    
     static {
         commandMap.put("add",  new AddCommand());
         commandMap.put("ls",   new ListCommand());

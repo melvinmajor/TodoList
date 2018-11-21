@@ -1,11 +1,19 @@
 package todolist.commands;
 
+import todolist.Main;
+import todolist.Task;
+
 public class ListCommand implements Command {
 
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
-
+    	var tasks = Main.taskManager.getTasks();
+    	System.out.println("| Description | Importance | Due date | Categories | Users | Completed |");
+    	for (Task t: tasks) {
+    		System.out.printf("| %s | %s | %s | %s | %s | %b |\n", t.getDescription(), t.getImportance(), t.getDueDate(), t.getCategories(), t.getUsers(), t.isCompleted());
+    		
+    		
+    	}
     }
 
     public String name() {
