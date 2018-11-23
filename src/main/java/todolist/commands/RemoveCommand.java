@@ -3,9 +3,11 @@ package todolist.commands;
 public class RemoveCommand implements Command {
 
 	@Override
-	public void execute() {
-		// TODO Auto-generated method stub
-
+		// Command to remove a task
+  public void removeCommand(Task e) {
+		this.Task.remove(e);
 	}
-
 }
+
+
+
