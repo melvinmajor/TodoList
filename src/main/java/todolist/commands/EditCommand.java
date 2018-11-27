@@ -1,11 +1,13 @@
 package todolist.commands;
 
+import todolist.Task;
+
+import java.util.Collection;
+
 public class EditCommand extends Command {
 
     @Override
-    public void execute() {
-        // TODO Auto-generated method stub
-
+    public void execute(Task task) {        // TODO Auto-generated method stub
     }
 
     public String name() {

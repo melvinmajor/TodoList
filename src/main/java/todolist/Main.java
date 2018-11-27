@@ -4,12 +4,14 @@ import todolist.cli.CLI;
 import todolist.commands.*;
 import todolist.server.Server;
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Main {
     public static Map<String, Command> commandMap = new HashMap<>();
-    public static TaskManager taskManager = new TaskManager();
+    public static Server server;
 
     static {
         commandMap.put("add", new AddCommand());
@@ -22,17 +24,33 @@ public class Main {
 
     public static void main(String[] args) {
         // Start server
-
         int port = 8002;
 
-
-        Server server = new Server(port);
+        server = new Server(port);
         new Thread(server::run).start();
 
         var command = ArgParser.parse(args);
         CLI client = new CLI("localhost", port);
-        client.sendCommand(command);
 
-        client.sendCommand(new ExitServerCommand());
+        // FIXME debug
+        HashSet<String> categories = new HashSet<>();
+        categories.add("hhhhhh");
+        Task task = new Task("test",
+                Importance.HIGH,
+                LocalDate.now(),
+                LocalDate.now(),
+                categories,
+                categories,
+                false
+        );
+
+        Query query = new Query(commandMap.get("add"), task);
+        client.sendCommand(query);
+
+
+      //  Query listQuery = new Query(command, null);
+      //  client.sendCommand(query);
+
+        client.sendCommand(new Query(new ExitServerCommand(), null));
     }
 }

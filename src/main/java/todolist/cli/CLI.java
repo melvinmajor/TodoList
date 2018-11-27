@@ -1,10 +1,14 @@
 package todolist.cli;
 
-import todolist.commands.Command;
+import todolist.Query;
+import todolist.Task;
+import todolist.commands.ExitServerCommand;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Collection;
 
 public class CLI {
     private String host;
@@ -15,18 +19,35 @@ public class CLI {
         this.port = port;
     }
 
-    public void sendCommand(Command command){
+    public void sendCommand(Query query){
         Socket client = null;
         try {
             client = new Socket(host, port);
             var out = new ObjectOutputStream(client.getOutputStream());
 
+            out.writeObject(query);
 
-            out.writeObject(command);
+            if(query.command instanceof ExitServerCommand){
+                client.close();
+                return;
+            }
+
+            var in = new ObjectInputStream(client.getInputStream());
+
+            Object obj = in.readObject();
+            if (obj instanceof Collection<?>){
+                var tasks = (Collection<Task>) obj;
+
+                // TODO debug
+                System.out.println("size: " + tasks.size());
+                System.out.println(tasks);
+            }
 
             client.close();
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

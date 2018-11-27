@@ -1,12 +1,14 @@
 package todolist.commands;
 
 import todolist.Main;
+import todolist.Task;
+
+import java.util.Collection;
 
 public class HelpCommand extends Command {
 
     @Override
-    public void execute() {
-        Main.commandMap.values().stream()
+    public void execute(Task task) {        Main.commandMap.values().stream()
                 .map(e -> e.name() + ": " + e.usage())
                 .forEach(System.out::println);
     }

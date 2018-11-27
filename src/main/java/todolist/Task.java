@@ -1,10 +1,11 @@
 package todolist;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
-public class Task {
+public class Task implements Serializable {
     private static int currentID;
 
     private int id;
@@ -98,5 +99,19 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", importance=" + importance +
+                ", creationDate=" + creationDate +
+                ", dueDate=" + dueDate +
+                ", categories=" + categories +
+                ", users=" + users +
+                ", completed=" + completed +
+                '}';
     }
 }

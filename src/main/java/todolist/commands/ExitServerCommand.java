@@ -1,9 +1,12 @@
 package todolist.commands;
 
-public class ExitServerCommand extends Command{
+import todolist.Task;
+
+import java.util.Collection;
+
+public class ExitServerCommand extends Command {
     @Override
-    public void execute() {
-    }
+    public void execute(Task task) {    }
 
     @Override
     public String name() {

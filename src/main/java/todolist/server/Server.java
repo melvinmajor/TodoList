@@ -1,15 +1,20 @@
 package todolist.server;
 
-import todolist.commands.Command;
+import todolist.Query;
+import todolist.Task;
+import todolist.TaskManager;
 import todolist.commands.ExitServerCommand;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
+import java.util.Collection;
 
 public class Server {
-    private int port;
+    public final TaskManager taskManager = new TaskManager();
     private ServerSocket socket;
+    private int port;
 
     public Server(int port) {
         this.port = port;
@@ -27,11 +32,15 @@ public class Server {
             try {
                 var server = socket.accept();
                 var in = new ObjectInputStream(server.getInputStream());
-                var action = (Command) in.readObject();
+                var action = (Query) in.readObject();
 
-                if (action instanceof ExitServerCommand) break;
+                if (action.command instanceof ExitServerCommand) {
+                    server.close();
+                    break;
+                }
 
-                handleAction(action);
+                handleAction(action, new ObjectOutputStream(server.getOutputStream()));
+
                 server.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -39,11 +48,14 @@ public class Server {
         }
     }
 
-    private void handleAction(Command command) {
-        // FIXME debug
-        System.out.println(command.getClass().getSimpleName());
-
-        // command.execute();
+    private void handleAction(Query query, ObjectOutputStream out) {
+        query.command.execute(query.task);
+        Collection<Task> tasks = taskManager.getTasks();
+        try {
+            out.writeObject(tasks);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

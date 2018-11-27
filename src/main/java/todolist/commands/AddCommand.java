@@ -1,11 +1,13 @@
 package todolist.commands;
 
+import todolist.Main;
+import todolist.Task;
+
 public class AddCommand extends Command {
 
     @Override
-    public void execute() {
-        // TODO Auto-generated method stub
-
+    public void execute(Task task) {
+        Main.server.taskManager.addTask(task);
     }
 
     public String name() {
