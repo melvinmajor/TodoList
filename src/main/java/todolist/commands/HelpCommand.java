@@ -2,7 +2,7 @@ package todolist.commands;
 
 import todolist.Main;
 
-public class HelpCommand implements Command {
+public class HelpCommand extends Command {
 
     @Override
     public void execute() {

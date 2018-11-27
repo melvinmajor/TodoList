@@ -1,6 +1,6 @@
 package todolist.commands;
 
-public class DoneCommand implements Command {
+public class DoneCommand extends Command {
 
     @Override
     public void execute() {

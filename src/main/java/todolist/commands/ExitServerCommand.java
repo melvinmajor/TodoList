@@ -1,20 +1,17 @@
 package todolist.commands;
 
-public class RemoveCommand extends Command {
-
+public class ExitServerCommand extends Command{
     @Override
     public void execute() {
-        // TODO Auto-generated method stub
     }
 
+    @Override
     public String name() {
-        return "rm";
+        return "exit";
     }
 
+    @Override
     public String usage() {
-        return "Remove a task.";
+        return "exit the server";
     }
 }
-
-
-

@@ -1,9 +1,11 @@
 package todolist.commands;
 
-public interface Command {
-    public void execute();
+import java.io.Serializable;
 
-    public String name();
+public abstract class Command implements Serializable {
+    public abstract void execute();
 
-    public String usage();
+    public abstract String name();
+
+    public abstract String usage();
 }
