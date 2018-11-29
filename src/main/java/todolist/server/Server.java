@@ -1,54 +1,50 @@
 package todolist.server;
 
+import todolist.common.Command;
 import todolist.common.Connection;
 import todolist.common.Query;
-import todolist.common.Command;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    public final TaskManager taskManager = new TaskManager();
+    private final TaskManager taskManager = new TaskManager();
     private final List<Connection> connections = new ArrayList<>();
     private ServerSocket socket;
-    private int port;
 
     public Server(int port) {
-        this.port = port;
-
         try {
             socket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void run() {
         // TODO load from file
 
-        while (true) {
-            try {
-                var server = socket.accept();
-
-
-                var in = new ObjectInputStream(server.getInputStream());
-                var action = (Query) in.readObject();
-
-                handleAction(action, new ObjectOutputStream(server.getOutputStream()));
-
-                // server.close();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
+        waitForConnections();
     }
 
-    private void handleAction(Query query, ObjectOutputStream out) {
+    private void waitForConnections() {
+        Runnable r = () -> {
+            while (true) {
+                try {
+                    var newSocket = socket.accept();
+                    var connection = new Connection<>(newSocket, this::handleAction, this.connections::remove);
+                    connections.add(connection);
+                    connection.listen();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(r).start();
+    }
+
+    private boolean handleAction(Query query) {
         System.out.println("received command " + query.command);
         switch (query.command) {
             case REMOVE:
@@ -58,19 +54,22 @@ public class Server {
             case ADD:
                 taskManager.addOrEditTask(query.task);
                 break;
+            case CLOSE:
+                return true;
         }
 
         if (query.command != Command.INIT) {
             // TODO save to file
         }
 
-        // return updated tasks
-        var tasks = taskManager.getTasks();
-        try {
-            out.writeObject(tasks);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        updateClients();
+
+        return false;
+    }
+
+    private void updateClients() {
+        connections.removeIf(Connection::isClosed);
+        for (var c : connections) c.send(taskManager.getTasks());
     }
 
 }

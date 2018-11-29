@@ -29,7 +29,12 @@ public class CLIClient extends BaseClient {
         do {
             System.out.print("\ntodolist> ");
 
-            if (!scan.hasNextLine()) break;
+            if (!scan.hasNextLine()) {
+                disconnect();
+                onExit();
+                break;
+            }
+
             var input = scan.nextLine().trim().replaceAll(" +", " ");
 
             execute(input);
@@ -42,6 +47,11 @@ public class CLIClient extends BaseClient {
         System.err.println("An error occurred while attempting to connect to the server");
         System.err.println("Is the server running ?");
         System.exit(1);
+    }
+
+    @Override
+    public void onExit() {
+        System.exit(0);
     }
 
     private void execute(String input) {
@@ -67,6 +77,7 @@ public class CLIClient extends BaseClient {
         }
 
         if (data.closeClient) {
+            disconnect();
             shouldExit = true;
         }
     }

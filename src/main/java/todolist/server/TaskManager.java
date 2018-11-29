@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class TaskManager {
-    private Set<Task> tasks = new HashSet<>();
+    private final Set<Task> tasks = new HashSet<>();
 
     public void addOrEditTask(Task task) {
         tasks.remove(task);

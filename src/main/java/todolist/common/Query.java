@@ -1,8 +1,5 @@
 package todolist.common;
 
-import todolist.common.Task;
-import todolist.common.Command;
-
 import java.io.Serializable;
 
 public class Query implements Serializable {
@@ -12,5 +9,13 @@ public class Query implements Serializable {
     public Query(Command command, Task task) {
         this.command = command;
         this.task = task;
+    }
+
+    @Override
+    public String toString() {
+        return "Query{" +
+                "command=" + command +
+                ", task=" + task +
+                '}';
     }
 }

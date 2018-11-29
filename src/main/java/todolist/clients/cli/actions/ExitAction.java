@@ -2,7 +2,7 @@ package todolist.clients.cli.actions;
 
 import todolist.common.Command;
 
-public class ExitAction implements Action{
+public class ExitAction implements Action {
     @Override
     public String getName() {
         return "exit";

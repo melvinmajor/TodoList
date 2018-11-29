@@ -9,7 +9,9 @@ public interface Client {
 
     void setPort(int port);
 
-    void onUpdate(Collection<Task> tasks);
+    boolean onUpdate(Collection<Task> tasks);
 
     void onConnectionError();
+
+    void onExit();
 }

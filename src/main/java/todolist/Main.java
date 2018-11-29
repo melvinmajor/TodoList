@@ -24,9 +24,7 @@ public class Main {
 
         if (argsList.contains("--server")) {
             Server server = new Server(port);
-            Thread thread = new Thread(server::run);
-            thread.setDaemon(false);
-            thread.start();
+            server.run();
         } else if (argsList.contains("--gui")) {
             // TODO
         } else {

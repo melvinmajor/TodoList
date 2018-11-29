@@ -1,13 +1,11 @@
 package todolist.clients;
 
 import todolist.common.Command;
+import todolist.common.Connection;
 import todolist.common.Query;
 import todolist.common.Task;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ConnectException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,62 +14,36 @@ import java.util.Optional;
 
 public abstract class BaseClient implements Client {
     private int port;
-    private final String host = "localhost";
+    private Connection connection;
     protected List<Task> tasks;
 
     @Override
     public void run() {
+        connect();
+        connection.listen();
         sendQuery(new Query(Command.INIT, null));
-        //new Thread(this::listen).start();
     }
 
-    private void listen() {
+    private void connect() {
         try {
-            Socket client = new Socket(host, port);
-            var in = new ObjectInputStream(client.getInputStream());
-
-            while (true) {
-                Object obj = in.readObject();
-                if (obj instanceof Collection<?>) {
-                    var tasks = (Collection<Task>) obj;
-                    System.out.println("GOT UPDATE");
-                    // onUpdate(tasks);
-                }
-            }
-
-            // client.close();
-
-        } catch (ConnectException e) {
+            String host = "localhost";
+            Socket socket = new Socket(host, port);
+            this.connection = new Connection<>(socket, this::onUpdate, this::onExit);
+        } catch (IOException e) {
             onConnectionError();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
+    }
+
+    private <T> void onExit(Connection<T> ignored) {
+        onExit();
+    }
+
+    protected void disconnect() {
+        connection.send(new Query(Command.CLOSE, null));
     }
 
     protected void sendQuery(Query query) {
-        Socket client;
-        try {
-            client = new Socket(host, port);
-            var out = new ObjectOutputStream(client.getOutputStream());
-
-            out.writeObject(query);
-
-            var in = new ObjectInputStream(client.getInputStream());
-
-            Object obj = in.readObject();
-            if (obj instanceof Collection<?>) {
-                var tasks = (Collection<Task>) obj;
-
-                onUpdate(tasks);
-            }
-
-            client.close();
-
-        } catch (ConnectException e) {
-            onConnectionError();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        connection.send(query);
     }
 
     @Override
@@ -80,8 +52,9 @@ public abstract class BaseClient implements Client {
     }
 
     @Override
-    public void onUpdate(Collection<Task> tasks) {
+    public boolean onUpdate(Collection<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
+        return false;
     }
 
     // TODO cache ?
