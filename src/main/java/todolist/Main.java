@@ -1,56 +1,39 @@
 package todolist;
 
-import todolist.cli.CLI;
-import todolist.commands.*;
+import todolist.clients.Client;
+import todolist.clients.cli.CLIClient;
 import todolist.server.Server;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 
 public class Main {
-    public static Map<String, Command> commandMap = new HashMap<>();
-    public static Server server;
-
-    static {
-        commandMap.put("add", new AddCommand());
-        commandMap.put("ls", new ListCommand());
-        commandMap.put("rm", new RemoveCommand());
-        commandMap.put("edit", new EditCommand());
-        commandMap.put("done", new DoneCommand());
-        commandMap.put("help", new HelpCommand());
-    }
 
     public static void main(String[] args) {
-        // Start server
+        List<String> argsList = List.of(args);
+
         int port = 8002;
+        int i = argsList.indexOf("--port");
+        if (i != -1 && i + 1 < argsList.size()) {
+            String maybePort = argsList.get(i + 1);
+            try {
+                port = Integer.parseInt(maybePort);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid port");
+            }
+        }
 
-        server = new Server(port);
-        new Thread(server::run).start();
+        if (argsList.contains("--server")) {
+            Server server = new Server(port);
+            Thread thread = new Thread(server::run);
+            thread.setDaemon(false);
+            thread.start();
+        } else if (argsList.contains("--gui")) {
+            // TODO
+        } else {
+            Client client = new CLIClient();
+            client.setPort(port);
+            client.run();
+        }
 
-        var command = ArgParser.parse(args);
-        CLI client = new CLI("localhost", port);
-
-        // FIXME debug
-        HashSet<String> categories = new HashSet<>();
-        categories.add("hhhhhh");
-        Task task = new Task("test",
-                Importance.HIGH,
-                LocalDate.now(),
-                LocalDate.now(),
-                categories,
-                categories,
-                false
-        );
-
-        Query query = new Query(commandMap.get("add"), task);
-        client.sendCommand(query);
-
-
-      //  Query listQuery = new Query(command, null);
-      //  client.sendCommand(query);
-
-        client.sendCommand(new Query(new ExitServerCommand(), null));
     }
 }

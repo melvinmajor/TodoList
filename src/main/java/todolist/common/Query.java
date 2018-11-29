@@ -1,6 +1,7 @@
-package todolist;
+package todolist.common;
 
-import todolist.commands.Command;
+import todolist.common.Task;
+import todolist.common.Command;
 
 import java.io.Serializable;
 
