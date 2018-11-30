@@ -1,6 +1,7 @@
 package todolist.common;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class TaskBuilder {
     private int id;
@@ -54,6 +55,8 @@ public class TaskBuilder {
 
     public Task build() {
         // TODO null checking maybe
+        Objects.requireNonNull(description);
+
         return new Task(id, description, importance, creationDate, dueDate, completed);
     }
 

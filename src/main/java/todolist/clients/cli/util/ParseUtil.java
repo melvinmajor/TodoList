@@ -66,7 +66,7 @@ public class ParseUtil {
     }
 
     // TODO ommit year
-    private static LocalDate parseDate(String s) {
+    public static LocalDate parseDate(String s) {
         try {
             return LocalDate.parse(s);
         } catch (DateTimeParseException e) {
@@ -99,11 +99,11 @@ public class ParseUtil {
         return matches.get(0);
     }
 
-    public static int getIntOrElse(String s, int or) {
+    public static Integer getInt(String s) {
         try {
-            return  Integer.parseInt(s);
+            return Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            return or;
+            return null;
         }
     }
 
