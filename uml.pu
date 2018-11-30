@@ -4,13 +4,13 @@ hide empty members
 hide empty methods
 
 skinparam titleFontSize 32
-skinparam titleFontColor Black
+skinparam titleFontColor Plum
 title
 UML diagram: TodoList
 endtitle
 
 legend
-get/sets, constructors & interface implementations ommited for clarity
+get/sets, constructors & interface implementations ommited for clarity 
 endlegend
 
 class Task {
@@ -32,7 +32,7 @@ class TaskManager {
     - tasks: Set<Task>
     ==
     + addTask(task: Task): void
-    + removeTask(task: Task): boolean
+    + removeTask(task: Task): boolean 
     + getTasks(): Collection<Task>
 }
 
@@ -54,7 +54,7 @@ class Main {
 class ArgParser {
     + {static} parseTask(args: List<String>): TaskBuilder
     - {static} parseImportance(s: String): Importance
-    + {static} match(elements: Collection<T>, toString: Function<T, String>, maybeMatch: String): T
+    + {static} match(elements: Collection<T>, toString: Function<T, String>, maybeMatch: String): T 
 }
 
 enum Command {
@@ -77,27 +77,22 @@ class Data {
     + editedTask: Task
 }
 
-class AddAction {
-}
+class AddAction
 
-class ExitAction {
-}
+class ExitAction
 
-class HelpAction {
-}
+class HelpAction
 
-class ListAction {
-}
+class ListAction
 
-class RemoveAction {
-}
+class RemoveAction
 
-class Connection<T> {
+class Connection {
     - out: ObjectOutputStream
     - in: ObjectInputStream
     - socket: Socket
     - listenCallback: Function<T, Boolean>
-    - onCloseCallback: Consumer<Connection<T>>
+    - onCloseCallback: Consumer<Connection<T>> 
     ==
     + isClosed(): boolean
     + close(): void
@@ -106,14 +101,14 @@ class Connection<T> {
 }
 
 class Query {
-    + command: Command
+    + command: Command 
     + task: Task
 }
 
 interface Client {
     run(): void
     setPort(port: int): void
-    onUpdate(tasks: Collection<Task>): boolean
+    onUpdate(tasks: Collection<Task>): boolean 
     onConnectionError(): void
     onExit(): void
 }
@@ -128,7 +123,7 @@ class BaseClient {
     - onExit(ignored: Connection<T>): void
     # disconnect(): void
     # sendQuery(query: Query): void
-    + onUpdate(tasks: Collection<Task>): boolean
+    + onUpdate(tasks: Collection<Task>): boolean 
     # nextAvailableId(): int
 }
 
@@ -156,14 +151,17 @@ class TaskBuilder {
 
 class GuiClient 
 
-Main ..> Server
+!define main(x) x <.. Main
+main(Server)
+main(CLIClient)
 
-!define ac(x) x ..|> Action
+!define ac(x) x .up.|> Action
 ac(AddAction)
 ac(ExitAction)
 ac(HelpAction)
 ac(ListAction)
 ac(RemoveAction)
+Data ..> Action
 
 !define ser(x) x ..|> Serializable
 ser(Query)
@@ -174,7 +172,7 @@ BaseClient <|.. CLIClient
 BaseClient <|.. GuiClient
 
 Server <-- GuiClient
-Server <-- CliClient
+Server <-- CLIClient
 Server o-- TaskManager
 
 TaskManager <.. Action
@@ -187,9 +185,16 @@ Main --* ArgParser
 
 Task --o TaskManager 
 
+!define tb(x) x ..> TaskBuilder
+tb(ArgParser)
+tb(AddCommand)
 
+!define connex(x) x ..> Connection
+connex(BaseClient)
+connex(Server)
 
-
+'========================================
+'========================================
 
 ' Liens avec les interfaces : héritage
 
