@@ -14,8 +14,8 @@ public class AddAction implements Action {
     @Override
     public boolean execute(Data data) {
         var task = ArgParser.parseTask(data.args)
-                .creationDate(LocalDate.now())
-                .id(data.nextAvailableId)
+                .setCreationDate(LocalDate.now())
+                .setId(data.nextAvailableId)
                 .build();
 
         if (task.description != null && !task.description.trim().isEmpty()) {

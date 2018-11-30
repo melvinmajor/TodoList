@@ -10,32 +10,32 @@ public class TaskBuilder {
     private LocalDate dueDate;
     private boolean completed;
 
-    public TaskBuilder id(int id) {
+    public TaskBuilder setId(int id) {
         this.id = id;
         return this;
     }
 
-    public TaskBuilder description(String description) {
+    public TaskBuilder setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public TaskBuilder importance(Importance importance) {
+    public TaskBuilder setImportance(Importance importance) {
         this.importance = importance;
         return this;
     }
 
-    public TaskBuilder creationDate(LocalDate creationDate) {
+    public TaskBuilder setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
         return this;
     }
 
-    public TaskBuilder dueDate(LocalDate dueDate) {
+    public TaskBuilder setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
         return this;
     }
 
-    public TaskBuilder completed(boolean completed) {
+    public TaskBuilder setCompleted(boolean completed) {
         this.completed = completed;
         return this;
     }

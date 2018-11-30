@@ -40,8 +40,8 @@ public class Task implements Serializable {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", importance=" + importance +
-                ", creationDate=" + creationDate +
-                ", dueDate=" + dueDate +
+                ", creation=" + creationDate +
+                ", due=" + dueDate +
                 ", completed=" + completed +
                 '}';
     }
