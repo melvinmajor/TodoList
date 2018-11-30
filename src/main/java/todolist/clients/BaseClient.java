@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public abstract class BaseClient implements Client {
     private int port;
-    private Connection connection;
+    private Connection<Collection<Task>> connection;
     protected List<Task> tasks;
 
     @Override

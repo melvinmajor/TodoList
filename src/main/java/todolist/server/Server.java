@@ -25,23 +25,20 @@ public class Server {
     public void run() {
         // TODO load from file
 
-        waitForConnections();
+        new Thread(this::waitForConnections).start();
     }
 
     private void waitForConnections() {
-        Runnable r = () -> {
-            while (true) {
-                try {
-                    var newSocket = socket.accept();
-                    var connection = new Connection<>(newSocket, this::handleAction, this.connections::remove);
-                    connections.add(connection);
-                    connection.listen();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        while (true) {
+            try {
+                var newSocket = socket.accept();
+                var connection = new Connection<>(newSocket, this::handleAction, this.connections::remove);
+                connections.add(connection);
+                connection.listen();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        };
-        new Thread(r).start();
+        }
     }
 
     private boolean handleAction(Query query) {

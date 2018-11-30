@@ -9,12 +9,12 @@ import java.util.Set;
 public class TaskManager {
     private final Set<Task> tasks = new HashSet<>();
 
-    public void addOrEditTask(Task task) {
+    public synchronized void addOrEditTask(Task task) {
         tasks.remove(task);
         tasks.add(task);
     }
 
-    public boolean removeTask(Task task) {
+    public synchronized boolean removeTask(Task task) {
         return tasks.remove(task);
     }
 

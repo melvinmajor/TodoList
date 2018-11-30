@@ -62,6 +62,7 @@ public class Connection<T> {
         try {
             out.writeObject(obj);
             out.flush();
+            out.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
