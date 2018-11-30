@@ -10,6 +10,18 @@ public class TaskBuilder {
     private LocalDate dueDate;
     private boolean completed;
 
+    public TaskBuilder() {
+    }
+
+    public TaskBuilder(Task task) {
+        this.id = task.id;
+        this.description = task.description;
+        this.importance = task.importance;
+        this.creationDate = task.creationDate;
+        this.dueDate = task.dueDate;
+        this.completed = task.completed;
+    }
+
     public TaskBuilder setId(int id) {
         this.id = id;
         return this;

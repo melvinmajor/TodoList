@@ -13,7 +13,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ArgParser {
+public class ParseUtil {
 
     private static final List<CategoryParser> pairs = List.of(
             new CategoryParser("importance", (v, b) -> {
@@ -43,8 +43,8 @@ public class ArgParser {
                 continue;
             }
 
-            var category = split[0];
-            var value = split[1];
+            var category = split[0].toLowerCase();
+            var value = split[1].toLowerCase();
 
             for (CategoryParser categoryParser : pairs) {
                 // TODO avoid collisions
@@ -97,6 +97,14 @@ public class ArgParser {
         if (matches.size() != 1) return null;
 
         return matches.get(0);
+    }
+
+    public static int getIntOrElse(String s, int or) {
+        try {
+            return  Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            return or;
+        }
     }
 
 }

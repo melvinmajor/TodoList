@@ -2,7 +2,7 @@ package todolist.clients.cli;
 
 import todolist.clients.BaseClient;
 import todolist.clients.cli.actions.*;
-import todolist.clients.cli.util.ArgParser;
+import todolist.clients.cli.util.ParseUtil;
 import todolist.common.Query;
 
 import java.util.ArrayList;
@@ -17,7 +17,8 @@ public class CLIClient extends BaseClient {
             new ListAction(),
             new AddAction(),
             new ExitAction(),
-            new RemoveAction());
+            new RemoveAction(),
+            new CompleteAction());
 
     private boolean shouldExit;
 
@@ -83,7 +84,7 @@ public class CLIClient extends BaseClient {
     }
 
     private Action parse(String action) {
-        Action match = ArgParser.match(actions, Action::getName, action);
+        Action match = ParseUtil.match(actions, Action::getName, action);
         return match == null ? helpAction : match;
     }
 
