@@ -3,25 +3,22 @@ scale max 3000*3000
 hide empty members
 hide empty methods
 
-skinparam titleFontSize 30
-skinparam titleFontColor Plum
+skinparam titleFontSize 32
+skinparam titleFontColor Black
 title
 UML diagram: TodoList
 endtitle
 
 legend
-get/sets & interface implementations ommited for clarity
+get/sets, constructors & interface implementations ommited for clarity
 endlegend
 
 class Task {
-    - {static} currentID: int
     - id: int
     - description: String
     - importance: Importance
     - creationDate: LocalDate
     - dueDate: LocalDate
-    - categories: Set<String>
-    - users: Set<String>
     - completed: boolean
 }
 
@@ -39,72 +36,149 @@ class TaskManager {
     + getTasks(): Collection<Task>
 }
 
+class Server {
+    - taskManager: TaskManager
+    - connections: List<Connection>
+    - socket: ServerSocket
+    ==
+    run(): void
+    waitForConnections(): void
+    handleAction(query: Query): boolean
+    updateClients(): void
+}
+
 class Main {
     + {static} main(args: String[]): void
 }
 
 class ArgParser {
-    + {static} parse(args: String[]): Command
+    + {static} parseTask(args: List<String>): TaskBuilder
+    - {static} parseImportance(s: String): Importance
+    + {static} match(elements: Collection<T>, toString: Function<T, String>, maybeMatch: String): T
 }
 
-class Configuration {
-    - {static} configFile: File
-    + {static} save(): void
-    + {static} load(): void
+enum Command {
+    ADD
+    REMOVE
+    INIT
+    CLOSE
 }
 
-interface TaskSorter {
-    + sort(tasks: Collection<Task>): Collection<Task>
+interface Action {
+    + execute(data: Data): void
+    + command(): Command
 }
 
-interface TaskFilter {
-    + filter(tasks: Collection<Task>): void
+class Data {
+    + tasks: List<Task>
+    + args: List<String>
+    + closeClient: boolean
+    + nextAvailableId: int
+    + editedTask: Task
 }
 
-interface Command {
-    + execute(...): void
+class AddAction {
 }
 
-interface ChangeListener {
-    + onChange(): void
+class ExitAction {
 }
 
-class Server {
-    - listeners: List<ChangeListener>
+class HelpAction {
+}
+
+class ListAction {
+}
+
+class RemoveAction {
+}
+
+class Connection<T> {
+    - out: ObjectOutputStream
+    - in: ObjectInputStream
+    - socket: Socket
+    - listenCallback: Function<T, Boolean>
+    - onCloseCallback: Consumer<Connection<T>>
     ==
-    + registerListener(listener: ChangeListener): void
-    + unregisterListener(listener: ChangeListener): void
-    ..
-    + executeCommand(command: Command): void
+    + isClosed(): boolean
+    + close(): void
+    + listen(): void
+    + send(obj: Object): void
 }
 
-class CliClient
+class Query {
+    + command: Command
+    + task: Task
+}
+
+interface Client {
+    run(): void
+    setPort(port: int): void
+    onUpdate(tasks: Collection<Task>): boolean
+    onConnectionError(): void
+    onExit(): void
+}
+
+class BaseClient {
+    - port: int
+    - connection: Connection<Collection<Task>>
+    # tasks: List<Task>
+    ==
+    + run(): void
+    - connect(): void
+    - onExit(ignored: Connection<T>): void
+    # disconnect(): void
+    # sendQuery(query: Query): void
+    + onUpdate(tasks: Collection<Task>): boolean
+    # nextAvailableId(): int
+}
+
+class CLIClient {
+    - {static} helpAction: Action
+    + {static} actions: List<Action>
+    ==
+    run(): void
+    onConnectionError(): void
+    onExit(): void
+    execute(input: String): void
+    parse(action: String): Action
+}
+
+class TaskBuilder {
+    - id: int
+    - description: String
+    - importance: Importance
+    - creationDate: LocalDate
+    - dueDate: LocalDate
+    - completed: boolean
+    ==
+    build(): Task
+}
+
 class GuiClient 
 
 Main ..> Server
 
-!define cl(x) x ..|> ChangeListener
-cl(CliClient)
-cl(GuiClient)
-cl(Configuration)
+!define ac(x) x ..|> Action
+ac(AddAction)
+ac(ExitAction)
+ac(HelpAction)
+ac(ListAction)
+ac(RemoveAction)
 
-ChangeListener --* Server
+!define ser(x) x ..|> Serializable
+ser(Query)
+ser(Task)
+
+Client <|.. BaseClient
+BaseClient <|.. CLIClient
+BaseClient <|.. GuiClient
 
 Server <-- GuiClient
 Server <-- CliClient
+Server o-- TaskManager
 
-TaskManager <.. Command
-
-' ..|> Implementation
-' --|> Héritage
-
-' --o Agrégation
-' --* Composition
-' --> Association
-' ..> Dépendence
-
-TaskSorter <.. Command
-TaskFilter <.. Command
+TaskManager <.. Action
+Command <.. Action
 
 Task o-- Importance
 
@@ -112,5 +186,21 @@ Main --* Command
 Main --* ArgParser
 
 Task --o TaskManager 
+
+
+
+
+
+' Liens avec les interfaces : héritage
+
+' http://ecrucru.free.fr/?page=uml
+
+' ..|> Implementation
+' --|> Héritage
+
+' --o Aggrégation
+' --* Composition
+' --> Association
+' ..> Dépendence
 
 @enduml

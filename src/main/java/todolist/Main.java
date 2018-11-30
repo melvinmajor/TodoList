@@ -1,25 +1,37 @@
 package todolist;
 
-import todolist.commands.*;
+import todolist.clients.Client;
+import todolist.clients.cli.CLIClient;
+import todolist.server.Server;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class Main {
-    public static Map<String, Command> commandMap = new HashMap<>();
-    public static TaskManager taskManager = new TaskManager();
-    
-    static {
-        commandMap.put("add",  new AddCommand());
-        commandMap.put("ls",   new ListCommand());
-        commandMap.put("rm",   new RemoveCommand());
-        commandMap.put("edit", new EditCommand());
-        commandMap.put("done", new DoneCommand());
-        commandMap.put("help", new HelpCommand());
-    }
 
     public static void main(String[] args) {
-        var command = ArgParser.parse(args);
-        command.execute();
+        List<String> argsList = List.of(args);
+
+        int port = 8002;
+        int i = argsList.indexOf("--port");
+        if (i != -1 && i + 1 < argsList.size()) {
+            String maybePort = argsList.get(i + 1);
+            try {
+                port = Integer.parseInt(maybePort);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid port");
+            }
+        }
+
+        if (argsList.contains("--server")) {
+            Server server = new Server(port);
+            server.run();
+        } else if (argsList.contains("--gui")) {
+            // TODO
+        } else {
+            Client client = new CLIClient();
+            client.setPort(port);
+            client.run();
+        }
+
     }
 }
