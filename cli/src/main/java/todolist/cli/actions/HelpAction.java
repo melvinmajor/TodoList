@@ -1,7 +1,7 @@
 package todolist.cli.actions;
 
 import todolist.cli.CLIClient;
-import todolist.server.common.Command;
+import todolist.common.Command;
 
 import java.util.stream.Collectors;
 

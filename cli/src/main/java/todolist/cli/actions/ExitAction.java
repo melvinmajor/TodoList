@@ -1,6 +1,6 @@
 package todolist.cli.actions;
 
-import todolist.server.common.Command;
+import todolist.common.Command;
 
 public class ExitAction implements Action {
     @Override

@@ -1,6 +1,6 @@
 package todolist.server;
 
-import todolist.server.common.Task;
+import todolist.common.Task;
 
 import java.util.Collection;
 import java.util.HashSet;

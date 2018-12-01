@@ -1,4 +1,4 @@
-package todolist.server.common;
+package todolist.common;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

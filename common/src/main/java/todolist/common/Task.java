@@ -1,4 +1,4 @@
-package todolist.server.common;
+package todolist.common;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -40,8 +40,8 @@ public class Task implements Serializable {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", importance=" + importance +
-                ", creationDate=" + creationDate +
-                ", dueDate=" + dueDate +
+                ", creation=" + creationDate +
+                ", due=" + dueDate +
                 ", completed=" + completed +
                 '}';
     }

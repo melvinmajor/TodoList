@@ -6,13 +6,14 @@ import todolist.cli.util.PromptResult.State;
 import todolist.cli.util.TaskUtil;
 import todolist.common.Command;
 import todolist.common.Task;
+import todolist.common.TaskBuilder;
 
 import java.util.function.Function;
 
-public class RemoveAction implements Action {
+public class CompleteAction implements Action {
     @Override
     public String getName() {
-        return "rm";
+        return "complete";
     }
 
     @Override
@@ -26,13 +27,14 @@ public class RemoveAction implements Action {
         PromptResult<Task> result = data.cliUtil.promptNoIgnore("Enter an id", taskById);
         if (result.state == State.EXIT) return false;
 
-        data.editedTask = result.value;
-        System.out.println("Task removed");
+        data.editedTask = new TaskBuilder(result.value).setCompleted(true).build();
+
+        System.out.println("Task completed");
         return true;
     }
 
     @Override
     public Command command() {
-        return Command.REMOVE;
+        return Command.EDIT;
     }
 }

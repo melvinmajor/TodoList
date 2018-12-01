@@ -1,6 +1,6 @@
 package todolist.clients;
 
-import todolist.server.common.Task;
+import todolist.common.Task;
 
 import java.util.Collection;
 

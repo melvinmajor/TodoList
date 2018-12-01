@@ -1,7 +1,7 @@
 package todolist.cli.actions;
 
-import todolist.server.common.Command;
-import todolist.server.common.Task;
+import todolist.common.Command;
+import todolist.common.Task;
 
 public class ListAction implements Action {
     @Override

@@ -1,8 +1,8 @@
 package todolist.server;
 
-import todolist.server.common.Command;
-import todolist.server.common.Connection;
-import todolist.server.common.Query;
+import todolist.common.Command;
+import todolist.common.Connection;
+import todolist.common.Query;
 
 import java.io.IOException;
 import java.net.ServerSocket;

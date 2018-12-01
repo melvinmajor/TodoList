@@ -1,12 +1,12 @@
 package todolist.cli;
 
 import todolist.cli.actions.*;
-import todolist.cli.util.ArgParser;
+import todolist.cli.util.CliUtil;
+import todolist.cli.util.ParseUtil;
+import todolist.cli.util.PromptResult.State;
 import todolist.clients.BaseClient;
-import todolist.server.common.Query;
+import todolist.common.Query;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,29 +17,31 @@ public class CLIClient extends BaseClient {
             new ListAction(),
             new AddAction(),
             new ExitAction(),
-            new RemoveAction());
+            new RemoveAction(),
+            new CompleteAction());
 
     private boolean shouldExit;
+    private CliUtil cliUtil;
 
     @Override
     public void run() {
         super.run();
-        // TODO
-        Scanner scan = new Scanner(System.in);
-        do {
-            System.out.print("\ntodolist> ");
 
-            if (!scan.hasNextLine()) {
+        var scanner = new Scanner(System.in);
+        cliUtil = new CliUtil(scanner);
+
+        while (!shouldExit) {
+            var actionResult = cliUtil.promptNoIgnore("Enter command", this::parse);
+
+            if (actionResult.state == State.EXIT) {
                 disconnect();
                 onExit();
                 break;
             }
 
-            var input = scan.nextLine().trim().replaceAll(" +", " ");
+            execute(actionResult.value);
+        }
 
-            execute(input);
-
-        } while (!shouldExit);
     }
 
     @Override
@@ -54,19 +56,12 @@ public class CLIClient extends BaseClient {
         System.exit(0);
     }
 
-    private void execute(String input) {
-        String[] strings = input.split(" ");
-
-        Action action = parse(strings[0]);
-
-        var args = new ArrayList<>(Arrays.asList(strings));
-        args.remove(strings[0]);
-
-        Data data = new Data(tasks, args, nextAvailableId());
+    private void execute(Action action) {
+        var data = new Data(tasks, nextAvailableId(), cliUtil);
         boolean success = action.execute(data);
 
         if (!success) {
-            System.err.println("An error occured..");
+            System.err.println("An error occured...");
             return;
         }
 
@@ -83,7 +78,7 @@ public class CLIClient extends BaseClient {
     }
 
     private Action parse(String action) {
-        Action match = ArgParser.match(actions, Action::getName, action);
+        Action match = ParseUtil.match(actions, Action::getName, action);
         return match == null ? helpAction : match;
     }
 

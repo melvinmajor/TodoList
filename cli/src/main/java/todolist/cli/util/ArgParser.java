@@ -1,7 +1,7 @@
 package todolist.cli.util;
 
-import todolist.server.common.Importance;
-import todolist.server.common.TaskBuilder;
+import todolist.common.Importance;
+import todolist.common.TaskBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,7 @@ public class ArgParser {
             if (a.startsWith("i:")) {
                 String[] split = a.split(":");
                 if (split.length == 2) {
-                    builder.importance(parseImportance(split[1]));
+                    builder.setImportance(parseImportance(split[1]));
                 }
                 used.add(a);
             }
@@ -30,7 +30,7 @@ public class ArgParser {
         args.removeAll(used);
 
         String description = String.join(" ", args);
-        builder.description(description);
+        builder.setDescription(description);
 
         return builder;
     }
