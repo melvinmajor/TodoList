@@ -1,1 +1,0 @@
-java -jar target/todolist-0.1-jar-with-dependencies.jar %*
