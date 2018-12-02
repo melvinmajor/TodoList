@@ -9,15 +9,18 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>10</maven.compiler.source>
-        <maven.compiler.target>10</maven.compiler.target>
-    </properties>
-
-    <artifactId>cli</artifactId>
+    <artifactId>cli-client</artifactId>
     <packaging>jar</packaging>
     <version>0.1</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>todolist</groupId>
+            <artifactId>base-client</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -52,20 +55,5 @@
 
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>todolist</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>todolist</groupId>
-            <artifactId>clients</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
 </project>
