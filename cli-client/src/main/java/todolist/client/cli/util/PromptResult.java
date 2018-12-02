@@ -1,4 +1,4 @@
-package todolist.cli.util;
+package todolist.client.cli.util;
 
 public class PromptResult<T> {
     public final T value;

@@ -1,6 +1,6 @@
-package todolist.cli.actions;
+package todolist.client.cli.actions;
 
-import todolist.cli.util.CliUtil;
+import todolist.client.cli.util.CliUtil;
 import todolist.common.Task;
 
 import java.util.List;

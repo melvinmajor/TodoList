@@ -1,4 +1,4 @@
-package todolist.cli;
+package todolist.client.cli;
 
 import java.util.List;
 

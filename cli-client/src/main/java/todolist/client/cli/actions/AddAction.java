@@ -1,7 +1,7 @@
-package todolist.cli.actions;
+package todolist.client.cli.actions;
 
-import todolist.cli.util.ParseUtil;
-import todolist.cli.util.PromptResult.State;
+import todolist.client.cli.util.ParseUtil;
+import todolist.client.cli.util.PromptResult.State;
 import todolist.common.Command;
 import todolist.common.Importance;
 import todolist.common.TaskBuilder;

@@ -1,4 +1,4 @@
-package todolist.clients;
+package todolist.client.base;
 
 import todolist.common.Task;
 

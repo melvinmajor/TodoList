@@ -1,10 +1,10 @@
-package todolist.cli;
+package todolist.client.cli;
 
-import todolist.cli.actions.*;
-import todolist.cli.util.CliUtil;
-import todolist.cli.util.ParseUtil;
-import todolist.cli.util.PromptResult.State;
-import todolist.clients.BaseClient;
+import todolist.client.base.BaseClient;
+import todolist.client.cli.actions.*;
+import todolist.client.cli.util.CliUtil;
+import todolist.client.cli.util.ParseUtil;
+import todolist.client.cli.util.PromptResult.State;
 import todolist.common.Query;
 
 import java.util.List;

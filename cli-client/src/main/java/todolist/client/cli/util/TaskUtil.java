@@ -1,4 +1,4 @@
-package todolist.cli.util;
+package todolist.client.cli.util;
 
 import todolist.common.Task;
 

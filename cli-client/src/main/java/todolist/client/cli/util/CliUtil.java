@@ -1,4 +1,4 @@
-package todolist.cli.util;
+package todolist.client.cli.util;
 
 import java.util.Scanner;
 import java.util.function.Function;

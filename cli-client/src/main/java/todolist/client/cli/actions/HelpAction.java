@@ -1,6 +1,6 @@
-package todolist.cli.actions;
+package todolist.client.cli.actions;
 
-import todolist.cli.CLIClient;
+import todolist.client.cli.CLIClient;
 import todolist.common.Command;
 
 import java.util.stream.Collectors;

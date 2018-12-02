@@ -1,4 +1,4 @@
-package todolist.cli.actions;
+package todolist.client.cli.actions;
 
 import todolist.common.Command;
 
