@@ -13,6 +13,7 @@
         <module>server</module>
         <module>base-client</module>
         <module>cli-client</module>
+        <module>gui-client</module>
     </modules>
     <packaging>pom</packaging>
 
