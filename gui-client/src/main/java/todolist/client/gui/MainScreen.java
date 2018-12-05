@@ -101,7 +101,7 @@ public class MainScreen extends BaseClient {
 
 	@Override
 	public void onConnectionError() {
-		JOptionPane.showMessageDialog(null, "erreur", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Error connection with the server failed", "ERROR", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	@Override
