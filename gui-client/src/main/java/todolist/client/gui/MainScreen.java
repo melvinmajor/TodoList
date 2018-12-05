@@ -20,14 +20,7 @@ public class MainScreen extends BaseClient {
 	public void run() {
 		super.run();
 
-		EventQueue.invokeLater(() -> {
-			try {
-				MainScreen window = new MainScreen();
-				window.frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+		this.frame.setVisible(true);
 	}
 
 	/**
