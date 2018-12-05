@@ -2,11 +2,13 @@ package todolist.client.cli;
 
 import todolist.client.base.BaseClient;
 import todolist.client.cli.actions.*;
+import todolist.client.cli.parsing.Type;
 import todolist.client.cli.util.CliUtil;
-import todolist.client.cli.util.ParseUtil;
 import todolist.client.cli.util.PromptResult.State;
 import todolist.common.Query;
+import todolist.common.Task;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +22,11 @@ public class CLIClient extends BaseClient {
             new RemoveAction(),
             new CompleteAction());
 
+    public static final CLIClient instance = new CLIClient();
+
+    private CLIClient() {
+    }
+
     private boolean shouldExit;
     private CliUtil cliUtil;
 
@@ -31,7 +38,7 @@ public class CLIClient extends BaseClient {
         cliUtil = new CliUtil(scanner);
 
         while (!shouldExit) {
-            var actionResult = cliUtil.promptNoIgnore("Enter command", this::parse);
+            var actionResult = cliUtil.<Action>promptNoIgnore("Enter command", Type.ACTION);
 
             if (actionResult.state == State.EXIT) {
                 disconnect();
@@ -57,7 +64,7 @@ public class CLIClient extends BaseClient {
     }
 
     private void execute(Action action) {
-        var data = new Data(tasks, nextAvailableId(), cliUtil);
+        var data = new Data(nextAvailableId(), cliUtil);
         boolean success = action.execute(data);
 
         if (!success) {
@@ -77,9 +84,8 @@ public class CLIClient extends BaseClient {
         }
     }
 
-    private Action parse(String action) {
-        Action match = ParseUtil.match(actions, Action::getName, action);
-        return match == null ? helpAction : match;
+    public Collection<Task> getTasks() {
+        return tasks;
     }
 
 }

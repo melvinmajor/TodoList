@@ -1,7 +1,9 @@
 package todolist.client.cli.util;
 
+import todolist.client.cli.parsing.Parsers;
+import todolist.client.cli.parsing.Type;
+
 import java.util.Scanner;
-import java.util.function.Function;
 
 public class CliUtil {
     private final Scanner scanner;
@@ -10,11 +12,7 @@ public class CliUtil {
         this.scanner = scanner;
     }
 
-    private PromptResult<String> promptOnce(String s) {
-        return promptOnce(s, Function.identity());
-    }
-
-    private <T> PromptResult<T> promptOnce(String s, Function<String, T> parse) {
+    private <T> PromptResult<T> promptOnce(String s, Type type) {
         System.out.print(s + "> ");
         if (!scanner.hasNextLine()) return PromptResult.exited();
 
@@ -25,16 +23,15 @@ public class CliUtil {
         else if (input.isEmpty())
             return PromptResult.ignored();
 
-        return new PromptResult<>(parse.apply(input));
+        T value = Parsers.parse(input, type);
+
+        return new PromptResult<>(value);
     }
 
-    private PromptResult<String> promptRepeat(String s, boolean canIgnore) {
-        return promptRepeat(s, e -> e.isEmpty() ? null : e, canIgnore);
-    }
 
-    private <T> PromptResult<T> promptRepeat(String s, Function<String, T> parse, boolean canIgnore) {
+    private <T> PromptResult<T> promptRepeat(String s, Type type, boolean canIgnore) {
         while (true) {
-            PromptResult<T> val = promptOnce(s, parse);
+            PromptResult<T> val = promptOnce(s, type);
             switch (val.state) {
                 case EXIT:
                     return val;
@@ -47,20 +44,12 @@ public class CliUtil {
         }
     }
 
-    public <T> PromptResult<T> promptIgnore(String s, Function<String, T> parse) {
-        return promptRepeat(s, parse, true);
+    public <T> PromptResult<T> promptIgnore(String s, Type type) {
+        return promptRepeat(s, type, true);
     }
 
-    public <T> PromptResult<T> promptNoIgnore(String s, Function<String, T> parse) {
-        return promptRepeat(s, parse, false);
-    }
-
-    public PromptResult<String> promptIgnore(String s) {
-        return promptRepeat(s, Function.identity(), true);
-    }
-
-    public PromptResult<String> promptNoIgnore(String s) {
-        return promptRepeat(s, Function.identity(), false);
+    public <T> PromptResult<T> promptNoIgnore(String s, Type type) {
+        return promptRepeat(s, type, false);
     }
 
 }

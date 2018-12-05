@@ -4,25 +4,25 @@ public class PromptResult<T> {
     public final T value;
     public final State state;
 
-    private PromptResult(T value, State state) {
-        this.value = value;
+    private PromptResult(State state) {
+        this.value = null;
         this.state = state;
     }
 
-    public PromptResult(T value) {
+    PromptResult(T value) {
         this.value = value;
         this.state = value == null ? State.FAILURE : State.SUCCESS;
     }
 
 
-    private static final PromptResult exitedResult = new PromptResult(null, State.EXIT);
-    private static final PromptResult ignoredResult = new PromptResult(null, State.IGNORE);
+    private static final PromptResult exitedResult = new PromptResult(State.EXIT);
+    private static final PromptResult ignoredResult = new PromptResult(State.IGNORE);
 
-    public static <T> PromptResult<T> exited() {
+    static <T> PromptResult<T> exited() {
         return (PromptResult<T>) exitedResult;
     }
 
-    public static <T> PromptResult<T> ignored() {
+    static <T> PromptResult<T> ignored() {
         return (PromptResult<T>) ignoredResult;
     }
 

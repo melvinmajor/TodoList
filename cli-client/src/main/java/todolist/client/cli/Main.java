@@ -17,7 +17,7 @@ public class Main {
             }
         }
 
-        var client = new CLIClient();
+        var client = CLIClient.instance;
         client.setPort(port);
         client.run();
     }
