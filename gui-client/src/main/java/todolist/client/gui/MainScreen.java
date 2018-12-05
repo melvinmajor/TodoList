@@ -1,5 +1,7 @@
 package todolist.client.gui;
 
+import todolist.client.base.BaseClient;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,23 +11,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
-public class Menu {
+public class MainScreen extends BaseClient {
 
 	private JFrame frame;
 	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Menu window = new Menu();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	@Override
+	public void run() {
+		super.run();
+
+		EventQueue.invokeLater(() -> {
+			try {
+				MainScreen window = new MainScreen();
+				window.frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -33,7 +33,7 @@ public class Menu {
 	/**
 	 * Create the application.
 	 */
-	public Menu() {
+	public MainScreen() {
 		initialize();
 	}
 
@@ -104,5 +104,15 @@ public class Menu {
 		});
 		btnExit.setBounds(418, 304, 89, 23);
 		frame.getContentPane().add(btnExit);
+	}
+
+	@Override
+	public void onConnectionError() {
+
+	}
+
+	@Override
+	public void onExit() {
+
 	}
 }
