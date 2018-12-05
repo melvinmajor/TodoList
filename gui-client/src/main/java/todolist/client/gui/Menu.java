@@ -68,26 +68,32 @@ public class Menu {
 		JTextArea txtrID = new JTextArea();
 		txtrID.setText("ID");
 		txtrID.setBounds(10, 79, 98, 23);
+		txtrID.setEditable(false);
 		frame.getContentPane().add(txtrID);
+		
 		
 		JTextArea txtrTask = new JTextArea();
 		txtrTask.setText("Task");
 		txtrTask.setBounds(109, 79, 98, 23);
+		txtrTask.setEditable(false);
 		frame.getContentPane().add(txtrTask);
 		
 		JTextArea txtrDescr = new JTextArea();
 		txtrDescr.setText("Description");
 		txtrDescr.setBounds(210, 79, 89, 23);
+		txtrDescr.setEditable(false);
 		frame.getContentPane().add(txtrDescr);
 		
 		JTextArea txtrDueDate = new JTextArea();
 		txtrDueDate.setText("Due Date");
 		txtrDueDate.setBounds(394, 79, 99, 23);
+		txtrDueDate.setEditable(false);
 		frame.getContentPane().add(txtrDueDate);
 		
 		JTextArea txtrImportance = new JTextArea();
 		txtrImportance.setText("Importance");
 		txtrImportance.setBounds(304, 79, 89, 22);
+		txtrImportance.setEditable(false);
 		frame.getContentPane().add(txtrImportance);
 		
 		JButton btnExit = new JButton("Exit");
