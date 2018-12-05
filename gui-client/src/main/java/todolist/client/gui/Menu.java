@@ -55,6 +55,7 @@ public class Menu {
 		frame.getContentPane().add(btnEditTask);
 		
 		JButton btnDeleteTask = new JButton("Delete Task");
+		
 		btnDeleteTask.setBounds(377, 11, 116, 23);
 		frame.getContentPane().add(btnDeleteTask);
 		
@@ -90,6 +91,11 @@ public class Menu {
 		frame.getContentPane().add(txtrImportance);
 		
 		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		btnExit.setBounds(418, 304, 89, 23);
 		frame.getContentPane().add(btnExit);
 	}
