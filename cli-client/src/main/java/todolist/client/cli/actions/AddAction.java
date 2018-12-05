@@ -1,13 +1,12 @@
 package todolist.client.cli.actions;
 
-import todolist.client.cli.util.ParseUtil;
+import todolist.client.cli.parsing.Type;
 import todolist.client.cli.util.PromptResult.State;
 import todolist.common.Command;
 import todolist.common.Importance;
 import todolist.common.TaskBuilder;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class AddAction implements Action {
     @Override
@@ -20,16 +19,15 @@ public class AddAction implements Action {
         var cli = data.cliUtil;
         var builder = new TaskBuilder();
 
-        var descriptionResult = cli.promptNoIgnore("Enter description");
+        var descriptionResult = cli.<String>promptNoIgnore("Enter description", Type.STRING);
         if (descriptionResult.state == State.EXIT) return false;
         builder.setDescription(descriptionResult.value);
 
-        var dueDateResult = cli.promptIgnore("Enter due date (optional)", ParseUtil::parseDate);
+        var dueDateResult = cli.<LocalDate>promptIgnore("Enter due date (optional)", Type.DATE);
         if (dueDateResult.state == State.EXIT) return false;
         else if (dueDateResult.state == State.SUCCESS) builder.setDueDate(dueDateResult.value);
 
-        var importanceResult = cli.promptIgnore("Enter importance (optional)",
-                e -> ParseUtil.match(List.of(Importance.values()), Importance::name, e));
+        var importanceResult = cli.<Importance>promptIgnore("Enter importance (optional)", Type.IMPORTANCE);
         if (importanceResult.state == State.EXIT) return false;
         else if (importanceResult.state == State.SUCCESS) builder.setImportance(importanceResult.value);
 
