@@ -1,111 +1,91 @@
 package todolist.client.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import todolist.client.base.BaseClient;
+import todolist.common.Task;
+
+import javax.swing.*;
+import java.util.Collection;
 
 public class MainScreen extends BaseClient {
 
-	private JFrame frame;
-	private JTextField textField;
+    private JFrame frame;
+    private JScrollPane scrollPane = new JScrollPane();
 
-	@Override
-	public void run() {
-		super.run();
+    @Override
+    public void run() {
+        super.run();
+        initialize();
+        this.frame.setVisible(true);
+    }
 
-		this.frame.setVisible(true);
+    /**
+     * Initialize the contents of the frame.
+     */
+    private void initialize() {
+        frame = new JFrame();
+        frame.setBounds(100, 100, 561, 396);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(null);
 
-	}
+        scrollPane.setBounds(10, 102, 483, 167);
+        frame.getContentPane().add(scrollPane);
 
-	/**
-	 * Create the application.
-	 */
-	public MainScreen() {
-		initialize();
-	}
+        JButton btnAddTask = new JButton("Add Task");
+        btnAddTask.setBounds(10, 11, 89, 23);
+        frame.getContentPane().add(btnAddTask);
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 561, 396);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+        JButton btnEditTask = new JButton("Edit Task");
+        btnEditTask.setBounds(210, 11, 89, 23);
+        frame.getContentPane().add(btnEditTask);
 
-		JButton btnAddTask = new JButton("Add Task");
-		btnAddTask.setBounds(10, 11, 89, 23);
-		frame.getContentPane().add(btnAddTask);
+        JButton btnDeleteTask = new JButton("Delete Task");
+        btnDeleteTask.setBounds(377, 11, 116, 23);
+        frame.getContentPane().add(btnDeleteTask);
 
-		JButton btnEditTask = new JButton("Edit Task");
-		btnEditTask.setBounds(210, 11, 89, 23);
-		frame.getContentPane().add(btnEditTask);
+        JButton btnExit = new JButton("Exit");
+        btnExit.addActionListener(e -> onExit());
+        btnExit.setBounds(418, 304, 89, 23);
+        frame.getContentPane().add(btnExit);
+    }
 
-		JButton btnDeleteTask = new JButton("Delete Task");
+    private JTable createTable() {
+        String[] header = new String[]{"Description", "Importance", "Due", "completed"};
+        String[][] data = new String[tasks.size()][4];
 
-		btnDeleteTask.setBounds(377, 11, 116, 23);
-		frame.getContentPane().add(btnDeleteTask);
+        for (int i = 0; i < tasks.size(); i++) {
+            var task = tasks.get(i);
+            String[] temp = new String[]{
+                    task.description,
+                    task.description,
+                    task.description,
+                    task.description
+            };
+            data[i] = temp;
+        }
 
-		textField = new JTextField();
-		textField.setBounds(10, 102, 483, 167);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		textField.setEditable(true);
+        return new JTable(data, header);
+    }
 
-		JTextArea txtrID = new JTextArea();
-		txtrID.setText("ID");
-		txtrID.setBounds(10, 79, 98, 23);
-		txtrID.setEditable(false);
-		frame.getContentPane().add(txtrID);
+    private void setTable() {
+        scrollPane.getViewport().removeAll();
+        var table = createTable();
+        scrollPane.getViewport().add(table);
+    }
 
-		JTextArea txtrTask = new JTextArea();
-		txtrTask.setText("Task");
-		txtrTask.setBounds(109, 79, 98, 23);
-		txtrTask.setEditable(false);
-		frame.getContentPane().add(txtrTask);
+    @Override
+    public void onConnectionError() {
+        JOptionPane.showMessageDialog(null, "Error connection with the server failed", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+    }
 
-		JTextArea txtrDescr = new JTextArea();
-		txtrDescr.setText("Description");
-		txtrDescr.setBounds(210, 79, 89, 23);
-		txtrDescr.setEditable(false);
-		frame.getContentPane().add(txtrDescr);
+    @Override
+    public void onExit() {
+        System.exit(0);
+    }
 
-		JTextArea txtrDueDate = new JTextArea();
-		txtrDueDate.setText("Due Date");
-		txtrDueDate.setBounds(394, 79, 99, 23);
-		txtrDueDate.setEditable(false);
-		frame.getContentPane().add(txtrDueDate);
-
-		JTextArea txtrImportance = new JTextArea();
-		txtrImportance.setText("Importance");
-		txtrImportance.setBounds(304, 79, 89, 22);
-		txtrImportance.setEditable(false);
-		frame.getContentPane().add(txtrImportance);
-
-		JButton btnExit = new JButton("Exit");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onExit();
-			}
-		});
-		btnExit.setBounds(418, 304, 89, 23);
-		frame.getContentPane().add(btnExit);
-	}
-
-	@Override
-	public void onConnectionError() {
-		JOptionPane.showMessageDialog(null, "Error connection with the server failed", "ERROR", JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	@Override
-	public void onExit() {
-		System.exit(0);
-	}
+    @Override
+    public boolean onUpdate(Collection<Task> tasks) {
+        var temp = super.onUpdate(tasks);
+        setTable();
+        return temp;
+    }
 }

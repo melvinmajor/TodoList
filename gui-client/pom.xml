@@ -36,7 +36,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>todolist.client.cli.Main</mainClass>
+                            <mainClass>todolist.client.gui.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
