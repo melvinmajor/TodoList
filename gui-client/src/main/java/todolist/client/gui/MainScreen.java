@@ -1,15 +1,13 @@
 package todolist.client.gui;
 
-import java.awt.Color;
-import java.awt.Image;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.swing.*;
-
 import todolist.client.base.BaseClient;
 import todolist.common.Task;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MainScreen extends BaseClient {
 
@@ -26,44 +24,45 @@ public class MainScreen extends BaseClient {
         this.frame.setVisible(true);
     }
 
-	/**
+    /**
      * Initialize the contents of the frame.
      */
     private void initialize() {
         frame = new JFrame();
         frame.setTitle("TodoList");
-        List<Image> icons = new ArrayList<Image>();
-        icons.add(new ImageIcon("TodoList-icon-16.png").getImage());
-        icons.add(new ImageIcon("TodoList-icon-32.png").getImage());
-        icons.add(new ImageIcon("TodoList-icon.png").getImage());
+
+        var icons = Stream.of("TodoList-icon-16.png", "TodoList-icon-32.png", "TodoList-icon.png")
+                .map(e -> Toolkit.getDefaultToolkit().getImage(e))
+                .collect(Collectors.toList());
+
         frame.setIconImages(icons);
         frame.setBounds(100, 100, 561, 396);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         frame.getContentPane().setBackground(new Color(238, 238, 238));
-        
-        JMenuBar menuBar = new JMenuBar();
+
+        var menuBar = new JMenuBar();
         menuBar.setBorderPainted(false);
         menuBar.setBackground(new Color(238, 238, 238));
         menuBar.setBounds(10, 6, 538, 30);
         frame.getContentPane().add(menuBar);
-                        
-                JButton btnAddTask = new JButton("Add Task");
-                menuBar.add(btnAddTask);
-                
-                JButton btnEditTask = new JButton("Edit Task");
-                menuBar.add(btnEditTask);
-                        
-                JButton btnDeleteTask = new JButton("Delete Task");
-                menuBar.add(btnDeleteTask);
+
+        var addTaskButton = new JButton("Add Task");
+        menuBar.add(addTaskButton);
+
+        var editTaskButton = new JButton("Edit Task");
+        menuBar.add(editTaskButton);
+
+        var DeleteTaskButton = new JButton("Delete Task");
+        menuBar.add(DeleteTaskButton);
 
         scrollPane.setBounds(10, 49, 540, 271);
         frame.getContentPane().add(scrollPane);
 
-        JButton btnExit = new JButton("Exit");
-        btnExit.addActionListener(e -> onExit());
-        btnExit.setBounds(461, 332, 89, 23);
-        frame.getContentPane().add(btnExit);
+        var exitButton = new JButton("Exit");
+        exitButton.addActionListener(e -> onExit());
+        exitButton.setBounds(461, 332, 89, 23);
+        frame.getContentPane().add(exitButton);
     }
 
     private JTable createTable() {
@@ -73,6 +72,7 @@ public class MainScreen extends BaseClient {
         for (int i = 0; i < tasks.size(); i++) {
             var task = tasks.get(i);
             String[] temp = new String[]{
+                    // TODO
                     task.description,
                     task.description,
                     task.description,
