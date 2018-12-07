@@ -1,13 +1,23 @@
+# Git ignore of TodoList Project
+# See repository at https://github.com/melvinmajor/TodoList
+# ==========================================================
+
+# Eclipse and IntelliJ module files
 .idea/
 *.iml
 
+# Maven export project folder
 target/
 
+# Other files
 .classpath
 .metadata/
 .settings/
 .project
 
+# Documents and other files unuseful files
 *.pdf
+*.DS_Store
 
+# PlantUML, because it's not the purpose to have it online
 doc/plantuml\.jar
