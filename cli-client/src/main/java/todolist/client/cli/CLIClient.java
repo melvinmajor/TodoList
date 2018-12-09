@@ -2,51 +2,45 @@ package todolist.client.cli;
 
 import todolist.client.base.BaseClient;
 import todolist.client.cli.actions.*;
-import todolist.client.cli.parsing.Type;
-import todolist.client.cli.util.CliUtil;
-import todolist.client.cli.util.PromptResult.State;
+import todolist.client.cli.util.PromptUtil;
 import todolist.common.Query;
 import todolist.common.Task;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.*;
+
+import static todolist.client.cli.parsing.Parsers.actionParser;
 
 public class CLIClient extends BaseClient {
-    private static final Action helpAction = new HelpAction();
+    public static final CLIClient instance = new CLIClient();
+
+    private final Comparator<Task> comparator = Comparator
+            .<Task, LocalDate>comparing(t -> t.dueDate, Comparator.nullsLast(Comparator.naturalOrder()))
+            .thenComparing(t -> t.importance, Comparator.nullsLast(Comparator.naturalOrder()));
+
     public static final List<Action> actions = List.of(
-            helpAction,
+            new HelpAction(),
             new ListAction(),
             new AddAction(),
             new ExitAction(),
             new RemoveAction(),
             new CompleteAction());
 
-    public static final CLIClient instance = new CLIClient();
 
     private CLIClient() {
     }
 
     private boolean shouldExit;
-    private CliUtil cliUtil;
+    public final Scanner scanner = new Scanner(System.in);
 
     @Override
     public void run() {
         super.run();
 
-        var scanner = new Scanner(System.in);
-        cliUtil = new CliUtil(scanner);
+        var actionPrompt = new PromptUtil<>(actionParser).ask("Enter command");
 
         while (!shouldExit) {
-            var actionResult = cliUtil.<Action>promptNoIgnore("Enter command", Type.ACTION);
-
-            if (actionResult.state == State.EXIT) {
-                disconnect();
-                onExit();
-                break;
-            }
-
-            execute(actionResult.value);
+            actionPrompt.getOptional().ifPresent(this::execute);
         }
 
     }
@@ -64,13 +58,10 @@ public class CLIClient extends BaseClient {
     }
 
     private void execute(Action action) {
-        var data = new Data(nextAvailableId(), cliUtil);
+        var data = new Data(nextAvailableId());
         boolean success = action.execute(data);
 
-        if (!success) {
-            System.err.println("An error occured...");
-            return;
-        }
+        if (!success) return;
 
         if (action.command() != null) {
             var task = data.editedTask;
@@ -88,4 +79,10 @@ public class CLIClient extends BaseClient {
         return tasks;
     }
 
+    @Override
+    public boolean onUpdate(Collection<Task> tasks) {
+        this.tasks = new ArrayList<>(tasks);
+        this.tasks.sort(comparator);
+        return false;
+    }
 }

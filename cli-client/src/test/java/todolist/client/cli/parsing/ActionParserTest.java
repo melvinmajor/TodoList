@@ -6,17 +6,29 @@ import todolist.client.cli.actions.AddAction;
 import todolist.client.cli.actions.ListAction;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ActionParserTest {
     @Test
     void testAdd() {
-        Action action = Parsers.parse("add", Type.ACTION);
+        Action action = null;
+        try {
+            action = Parsers.actionParser.parse("add");
+        } catch (ParseException e) {
+            fail();
+        }
         assertTrue(action instanceof AddAction);
     }
 
     @Test
     void testList() {
-        Action action = Parsers.parse("ls", Type.ACTION);
+        Action action = null;
+        try {
+            action = Parsers.actionParser.parse("ls");
+        } catch (ParseException e) {
+            fail();
+        }
         assertTrue(action instanceof ListAction);
     }
+
 }

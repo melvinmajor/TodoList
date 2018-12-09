@@ -1,9 +1,14 @@
 package todolist.client.cli.parsing;
 
-import todolist.client.cli.util.TaskUtil;
 import todolist.common.Task;
 
-class TaskByIdParser implements Parser<Task> {
+public class TaskByIdParser implements Parser<Task> {
+    private final Task[] tasks;
+
+    public TaskByIdParser(Task[] tasks) {
+        this.tasks = tasks;
+    }
+
     @Override
     public Task parse(String s) throws ParseException {
         int id;
@@ -12,11 +17,9 @@ class TaskByIdParser implements Parser<Task> {
         } catch (NumberFormatException e) {
             throw new ParseException();
         }
+        if (id < 0 || id > tasks.length - 1) throw new ParseException();
 
-        Task task = TaskUtil.getTaskById(id);
-        if (task == null) throw new ParseException();
-
-        return null;
+        return tasks[id];
     }
 
     @Override
@@ -24,8 +27,4 @@ class TaskByIdParser implements Parser<Task> {
         return "invalid ID";
     }
 
-    @Override
-    public Type type() {
-        return Type.ID;
-    }
 }

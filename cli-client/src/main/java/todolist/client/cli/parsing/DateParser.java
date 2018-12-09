@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-class DateParser implements Parser<LocalDate> {
+public class DateParser implements Parser<LocalDate> {
     @Override
     public LocalDate parse(String s) throws ParseException {
         var formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -23,8 +23,4 @@ class DateParser implements Parser<LocalDate> {
         return "Invalid date format (ex: [2018/]12/31)";
     }
 
-    @Override
-    public Type type() {
-        return Type.DATE;
-    }
 }

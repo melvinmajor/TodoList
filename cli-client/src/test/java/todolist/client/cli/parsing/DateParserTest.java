@@ -5,29 +5,36 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DateParserTest {
     private LocalDate expected = LocalDate.of(2018, Month.DECEMBER, 1);
 
     @Test
-    void shortFormatTest() {
+    void longFormatTest() {
         var s = "2018/12/01";
-        LocalDate date = Parsers.parse(s, Type.DATE);
-        assertEquals(expected, date);
+        try {
+            var date = Parsers.dateParser.parse(s);
+            assertEquals(expected, date);
+        } catch (ParseException e) {
+            fail();
+        }
     }
 
     @Test
-    void longFormatTest() {
+    void shortFormatTest() {
         var s = "12/01";
-        LocalDate date = Parsers.parse(s, Type.DATE);
-        assertEquals(expected, date);
+        try {
+            var date = Parsers.dateParser.parse(s);
+            assertEquals(expected, date);
+        } catch (ParseException e) {
+            fail();
+        }
     }
 
     @Test
     void wrongFormatTest() {
-        assertNull(Parsers.parse("05 january", Type.DATE));
+        assertThrows(ParseException.class, () -> Parsers.dateParser.parse("05 january"));
     }
 
 }

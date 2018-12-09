@@ -1,6 +1,6 @@
 package todolist.client.cli.parsing;
 
-class StringParser implements Parser<String> {
+public class StringParser implements Parser<String> {
     @Override
     public String parse(String s) throws ParseException {
         if (s.isBlank()) throw new ParseException();
@@ -12,8 +12,4 @@ class StringParser implements Parser<String> {
         return "input can't be empty";
     }
 
-    @Override
-    public Type type() {
-        return Type.STRING;
-    }
 }
