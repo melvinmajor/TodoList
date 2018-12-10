@@ -21,6 +21,7 @@ public class AddTask extends JFrame {
     public static void main(String[] args) {
         AddTask frame = new AddTask();
         frame.setTitle("TodoList - Add Task");
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 
@@ -29,13 +30,13 @@ public class AddTask extends JFrame {
      */
     public AddTask() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 388, 300);
+        setBounds(100, 100, 388, 260);
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel dueDateLabel = new JLabel("Due Date");
+        JLabel dueDateLabel = new JLabel("Due Date:");
         dueDateLabel.setBounds(10, 11, 69, 22);
         contentPane.add(dueDateLabel);
 
@@ -55,7 +56,7 @@ public class AddTask extends JFrame {
         var monthChoice = new Choice();
         List.of(Month.values())
                 .forEach(e -> monthChoice.add(e.name().toLowerCase()));
-        monthChoice.setBounds(171, 11, 93, 20);
+        monthChoice.setBounds(171, 13, 130, 20);
         contentPane.add(monthChoice);
 
         // year
@@ -65,13 +66,13 @@ public class AddTask extends JFrame {
         yearFormatter.setAllowsInvalid(false);
         yearFormatter.setMinimum(1);
         var yearField = new JFormattedTextField(yearFormatter);
-        yearField.setBounds(271, 12, 75, 20);
+        yearField.setBounds(307, 12, 75, 20);
         yearField.setColumns(10);
         contentPane.add(yearField);
 
         // importance label
-        var textLabel = new JLabel("Importance");
-        textLabel.setBounds(10, 44, 69, 22);
+        var textLabel = new JLabel("Importance:");
+        textLabel.setBounds(10, 44, 93, 22);
         contentPane.add(textLabel);
 
         // importance choice
@@ -79,21 +80,21 @@ public class AddTask extends JFrame {
         importanceChoice.add("none");
         List.of(Importance.values())
                 .forEach(e -> importanceChoice.add(e.name().toLowerCase()));
-        importanceChoice.setBounds(89, 44, 151, 20);
+        importanceChoice.setBounds(113, 46, 151, 20);
         contentPane.add(importanceChoice);
 
         // description
-        var descriptionLabel = new JLabel("Description");
+        var descriptionLabel = new JLabel("Description:");
         descriptionLabel.setBounds(10, 77, 93, 20);
         contentPane.add(descriptionLabel);
 
         var descriptionArea = new JTextArea();
-        descriptionArea.setBounds(10, 108, 336, 83);
+        descriptionArea.setBounds(6, 109, 376, 83);
         contentPane.add(descriptionArea);
 
         // add button
         var addButton = new JButton("Add");
-        addButton.setBounds(256, 215, 89, 23);
+        addButton.setBounds(293, 204, 89, 23);
         addButton.addActionListener(e -> {
             var builder = new TaskBuilder();
 

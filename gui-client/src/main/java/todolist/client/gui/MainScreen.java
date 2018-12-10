@@ -1,13 +1,14 @@
 package todolist.client.gui;
 
-import todolist.client.base.BaseClient;
-import todolist.common.Task;
-
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import todolist.client.base.BaseClient;
+import todolist.common.Task;
 
 public class MainScreen extends BaseClient {
 
@@ -38,31 +39,49 @@ public class MainScreen extends BaseClient {
         frame.setIconImages(icons);
         frame.setBounds(100, 100, 561, 396);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
         frame.getContentPane().setBackground(new Color(238, 238, 238));
-
-        var menuBar = new JMenuBar();
-        menuBar.setBorderPainted(false);
-        menuBar.setBackground(new Color(238, 238, 238));
-        menuBar.setBounds(10, 6, 538, 30);
-        frame.getContentPane().add(menuBar);
-
-        var addTaskButton = new JButton("Add Task");
-        menuBar.add(addTaskButton);
-
-        var editTaskButton = new JButton("Edit Task");
-        menuBar.add(editTaskButton);
-
-        var DeleteTaskButton = new JButton("Delete Task");
-        menuBar.add(DeleteTaskButton);
-
-        scrollPane.setBounds(10, 49, 540, 271);
-        frame.getContentPane().add(scrollPane);
-
-        var exitButton = new JButton("Exit");
-        exitButton.addActionListener(e -> onExit());
-        exitButton.setBounds(461, 332, 89, 23);
-        frame.getContentPane().add(exitButton);
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        gridBagLayout.columnWidths = new int[]{540, 0};
+        gridBagLayout.rowHeights = new int[]{30, 271, 23, 0};
+        gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+        frame.getContentPane().setLayout(gridBagLayout);
+        
+                var menuBar = new JMenuBar();
+                menuBar.setBorderPainted(false);
+                menuBar.setBackground(new Color(238, 238, 238));
+                GridBagConstraints gbc_menuBar = new GridBagConstraints();
+                gbc_menuBar.anchor = GridBagConstraints.NORTH;
+                gbc_menuBar.fill = GridBagConstraints.HORIZONTAL;
+                gbc_menuBar.insets = new Insets(0, 0, 5, 0);
+                gbc_menuBar.gridx = 0;
+                gbc_menuBar.gridy = 0;
+                frame.getContentPane().add(menuBar, gbc_menuBar);
+                
+                        var addTaskButton = new JButton("Add Task");
+                        menuBar.add(addTaskButton);
+                        
+                        var editTaskButton = new JButton("Edit Task");
+                        menuBar.add(editTaskButton);
+                                
+                        var DeleteTaskButton = new JButton("Delete Task");
+                        menuBar.add(DeleteTaskButton);
+                        
+        GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+        gbc_scrollPane.fill = GridBagConstraints.BOTH;
+        gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+        gbc_scrollPane.gridx = 0;
+        gbc_scrollPane.gridy = 1;
+        frame.getContentPane().add(scrollPane, gbc_scrollPane);
+        
+                var exitButton = new JButton("Exit");
+                exitButton.addActionListener(e -> onExit());
+                GridBagConstraints gbc_exitButton = new GridBagConstraints();
+                gbc_exitButton.anchor = GridBagConstraints.EAST;
+                gbc_exitButton.fill = GridBagConstraints.VERTICAL;
+                gbc_exitButton.gridx = 0;
+                gbc_exitButton.gridy = 2;
+                frame.getContentPane().add(exitButton, gbc_exitButton);
     }
 
     private JTable createTable() {
@@ -80,16 +99,19 @@ public class MainScreen extends BaseClient {
             };
             data[i] = temp;
         }
-
+        
         return new JTable(data, header);
     }
-
+    
     private void setTable() {
         scrollPane.getViewport().removeAll();
         var table = createTable();
         scrollPane.setViewportView(table);
     }
-
+    
+    /**
+     * If a connection error occurs while trying to connect to the server, an error message appears.
+     */
     @Override
     public void onConnectionError() {
         JOptionPane.showMessageDialog(null, "Error connection with the server failed", "ERROR", JOptionPane.INFORMATION_MESSAGE);
@@ -100,6 +122,9 @@ public class MainScreen extends BaseClient {
         System.exit(0);
     }
 
+    /**
+     * Update content from the server in the table initialized in the content of the frame.
+     */
     @Override
     public boolean onUpdate(Collection<Task> tasks) {
         var temp = super.onUpdate(tasks);
