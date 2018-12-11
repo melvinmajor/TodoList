@@ -19,6 +19,7 @@ public class MainScreen extends BaseClient {
 
 	/**
 	 * Launch the main frame of the GUI client.
+	 * 
 	 * @wbp.parser.entryPoint
 	 */
 	@Override
@@ -63,7 +64,9 @@ public class MainScreen extends BaseClient {
 
 		var addTaskButton = new JButton("Add Task");
 		menuBar.add(addTaskButton);
-		addTaskButton.addActionListener(e -> {new AddTask().run();});
+		addTaskButton.addActionListener(e -> {
+			new AddTask().run();
+		});
 
 		var editTaskButton = new JButton("Edit Task");
 		menuBar.add(editTaskButton);
@@ -92,15 +95,17 @@ public class MainScreen extends BaseClient {
 		String[] header = new String[] { "Description", "Importance", "Due", "completed" };
 		String[][] data = new String[tasks.size()][4];
 		DateTimeFormatter jeanMi = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-		
+
 		for (int i = 0; i < tasks.size(); i++) {
 			var task = tasks.get(i);
-			String[] temp = new String[] {
-					task.description,
-					task.importance.toString().substring(0, 1).toUpperCase()+task.importance.toString().substring(1).toLowerCase(),
-					task.dueDate.format(jeanMi),
-					task.completed ? "V" : "X" // V for false, X for true.
-					};
+			String[] temp = new String[] { task.description,
+					task.importance != null
+							? task.importance.toString().substring(0, 1).toUpperCase()
+									+ task.importance.toString().substring(1).toLowerCase()
+							: "",
+					task.dueDate != null ? task.dueDate.format(jeanMi) : "", task.completed ? "V" : "X" // V for false,
+																										// X for true.
+			};
 			data[i] = temp;
 		}
 
