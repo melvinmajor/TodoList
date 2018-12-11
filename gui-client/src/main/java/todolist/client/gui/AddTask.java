@@ -16,13 +16,13 @@ import java.util.List;
 public class AddTask extends JFrame {
 
     /**
-     * Launch the application.
+     * Launch the frame to add tasks in the GUI client.
+     * @wbp.parser.entryPoint
      */
-    public static void main(String[] args) {
-        AddTask frame = new AddTask();
-        frame.setTitle("TodoList - Add Task");
-        frame.setResizable(false);
-        frame.setVisible(true);
+    public void run() {
+        setTitle("TodoList - Add Task");
+        setResizable(false);
+        setVisible(true);
     }
 
     /**

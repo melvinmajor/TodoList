@@ -2,7 +2,7 @@
 # See repository at https://github.com/melvinmajor/TodoList
 # ==========================================================
 
-# Eclipse and IntelliJ module files
+# Files and folders of IDE
 .idea/
 *.iml
 
@@ -15,9 +15,7 @@ target/
 .settings/
 .project
 
-# Documents and other files unuseful files
+# Documents and other useless files
 *.pdf
+*.jar
 *.DS_Store
-
-# PlantUML, because it's not the purpose to have it online
-doc/plantuml\.jar
