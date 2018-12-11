@@ -25,6 +25,7 @@ public class MainScreen extends BaseClient {
 	public void run() {
 		super.run();
 		initialize();
+		frame.setMinimumSize(new Dimension(561, 396));
 		this.frame.setVisible(true);
 	}
 
