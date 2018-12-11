@@ -15,8 +15,8 @@ It manage tasks with categories, which will be totally freely specified by users
 
 ## Built With
 
-* [Eclipse](https://www.eclipse.org) - A free and open-source Java Integrated Development Environment (IDE)
-* [IntelliJ IDEA](https://www.jetbrains.com/idea/) - Another Java IDE, created by JetBrains and available for free for eligible students
+* [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/) - The best java IDE, free and open-source
+* [Eclipse](https://www.eclipse.org) - A free and open-source IDE
 * [Maven](https://maven.apache.org/) - Dependency Management
 
 ## License
