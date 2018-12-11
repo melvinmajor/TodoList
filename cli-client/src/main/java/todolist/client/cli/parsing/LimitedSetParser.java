@@ -22,12 +22,10 @@ abstract class LimitedSetParser<T> implements Parser<T> {
 
     @Override
     public final String onError() {
-        String possibilities = elements()
+        return elements()
                 .stream()
                 .map(this::toName)
                 .collect(Collectors.joining(" | "));
-
-        return "Enter " + possibilities;
     }
 
     private T match(String s) {

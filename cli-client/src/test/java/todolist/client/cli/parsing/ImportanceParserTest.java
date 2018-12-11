@@ -4,20 +4,28 @@ import org.junit.jupiter.api.Test;
 import todolist.common.Importance;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class ImportanceParserTest {
 
     @Test
     void testFullName() {
-        var i = Parsers.parse("high", Type.IMPORTANCE);
-        assertEquals(Importance.HIGH, i);
+        try {
+            var i = Parsers.importanceParser.parse("high");
+            assertEquals(Importance.HIGH, i);
+        } catch (ParseException e) {
+            fail();
+        }
     }
 
     @Test
     void testShortName() {
-        var i = Parsers.parse("m", Type.IMPORTANCE);
-        assertEquals(Importance.MEDIUM, i);
+        try {
+            var i = Parsers.importanceParser.parse("m");
+            assertEquals(Importance.MEDIUM, i);
+        } catch (ParseException e) {
+            fail();
+        }
     }
-
 
 }

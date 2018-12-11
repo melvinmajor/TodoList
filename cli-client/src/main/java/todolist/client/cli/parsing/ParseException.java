@@ -1,4 +1,4 @@
 package todolist.client.cli.parsing;
 
-class ParseException extends Exception {
+public class ParseException extends Exception {
 }

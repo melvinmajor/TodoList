@@ -5,7 +5,7 @@ import todolist.common.Importance;
 import java.util.Collection;
 import java.util.List;
 
-class ImportanceParser extends LimitedSetParser<Importance> {
+public class ImportanceParser extends LimitedSetParser<Importance> {
 
     @Override
     protected String toName(Importance e) {
@@ -17,8 +17,4 @@ class ImportanceParser extends LimitedSetParser<Importance> {
         return List.of(Importance.values());
     }
 
-    @Override
-    public Type type() {
-        return Type.IMPORTANCE;
-    }
 }

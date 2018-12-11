@@ -5,7 +5,7 @@ import todolist.client.cli.actions.Action;
 
 import java.util.Collection;
 
-class ActionParser extends LimitedSetParser<Action> {
+public class ActionParser extends LimitedSetParser<Action> {
     @Override
     protected String toName(Action e) {
         return e.getName();
@@ -16,8 +16,4 @@ class ActionParser extends LimitedSetParser<Action> {
         return CLIClient.actions;
     }
 
-    @Override
-    public Type type() {
-        return Type.ACTION;
-    }
 }

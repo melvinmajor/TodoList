@@ -53,9 +53,12 @@ public class TaskBuilder {
         return this;
     }
 
+    public boolean validate() {
+        return description != null && !description.isBlank();
+    }
+
     public Task build() {
-        // TODO null checking maybe
-        Objects.requireNonNull(description);
+        if (!validate()) throw new IllegalStateException();
 
         return new Task(id, description, importance, creationDate, dueDate, completed);
     }
