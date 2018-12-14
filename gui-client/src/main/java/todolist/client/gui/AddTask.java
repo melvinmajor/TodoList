@@ -32,11 +32,11 @@ public class AddTask {
             builder.setImportance(importance);
         }
 
-        var datePresent = !addTaskScreen.getDayField().getText().isEmpty() && !addTaskScreen.getYearField().getText().isEmpty();
+        var datePresent = !addTaskScreen.getDayField().getText().isEmpty();
         if (datePresent) {
             var day = Integer.parseInt(addTaskScreen.getDayField().getText());
             var month = Month.valueOf(addTaskScreen.getMonthChoice().getSelectedItem().toUpperCase());
-            var year = Integer.parseInt(addTaskScreen.getYearField().getText());
+            var year = Integer.parseInt(addTaskScreen.getYearChoice().getSelectedItem());
 
             try {
                 builder.setDueDate(LocalDate.of(year, month, day));

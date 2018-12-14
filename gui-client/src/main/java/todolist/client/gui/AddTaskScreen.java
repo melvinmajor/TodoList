@@ -7,13 +7,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
 public class AddTaskScreen extends JFrame {
     private final JFormattedTextField dayField;
     private final Choice monthChoice;
-    private final JFormattedTextField yearField;
+    private final Choice yearChoice;
     private final Choice importanceChoice;
     private final JTextArea descriptionArea;
     private final JButton addButton;
@@ -80,16 +81,13 @@ public class AddTaskScreen extends JFrame {
         gbc_monthChoice.gridy = 0;
         contentPane.add(monthChoice, gbc_monthChoice);
 
-        // year format
-        var yearFormat = NumberFormat.getIntegerInstance();
-        var yearFormatter = new NumberFormatter(yearFormat);
-        yearFormatter.setValueClass(Integer.class);
-        yearFormatter.setAllowsInvalid(false);
-        yearFormatter.setMinimum(1);
 
         // year
-        yearField = new JFormattedTextField(yearFormatter);
-        yearField.setColumns(10);
+        yearChoice = new Choice();
+        int currentYear = LocalDate.now().getYear();
+        for(int i= currentYear;  i<currentYear + 30; i++) {
+            yearChoice.add(String.valueOf(i));
+        }
 
         // ???
         GridBagConstraints gbc_yearField = new GridBagConstraints();
@@ -97,7 +95,7 @@ public class AddTaskScreen extends JFrame {
         gbc_yearField.insets = new Insets(0, 0, 5, 0);
         gbc_yearField.gridx = 4;
         gbc_yearField.gridy = 0;
-        contentPane.add(yearField, gbc_yearField);
+        contentPane.add(yearChoice, gbc_yearField);
 
         var dueDateLabel = new JLabel("Due Date:");
 
@@ -172,7 +170,6 @@ public class AddTaskScreen extends JFrame {
 
     }
 
-
     public JFormattedTextField getDayField() {
         return dayField;
     }
@@ -181,8 +178,8 @@ public class AddTaskScreen extends JFrame {
         return monthChoice;
     }
 
-    public JFormattedTextField getYearField() {
-        return yearField;
+    public Choice getYearChoice() {
+        return yearChoice;
     }
 
     public Choice getImportanceChoice() {
