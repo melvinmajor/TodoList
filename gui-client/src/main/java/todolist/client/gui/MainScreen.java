@@ -6,6 +6,9 @@ import todolist.common.Query;
 import todolist.common.Task;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -90,6 +93,7 @@ public class MainScreen extends BaseClient {
     }
 
     private JTable createTable() {
+        
         String[] header = new String[]{"Description", "Importance", "Due", "completed"};
         String[][] data = new String[tasks.size()][4];
         DateTimeFormatter jeanMi = DateTimeFormatter.ofPattern("dd LLLL yyyy");
@@ -106,8 +110,14 @@ public class MainScreen extends BaseClient {
             };
             data[i] = temp;
         }
-
-        return new JTable(data, header);
+        TableModel model = new DefaultTableModel(data, header) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        var table = new JTable(data, header);
+        table.setModel(model);
+        return table;
     }
 
     private void setTable() {
@@ -151,5 +161,6 @@ public class MainScreen extends BaseClient {
         return super.nextAvailableId();
     }
 
+   
 
 }
