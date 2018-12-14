@@ -1,14 +1,11 @@
 package todolist.client.gui;
 
 import todolist.client.base.BaseClient;
-import todolist.common.Command;
-import todolist.common.Query;
-import todolist.common.Task;
+import todolist.common.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -69,11 +66,13 @@ public class MainScreen extends BaseClient {
             new AddTaskScreen(this).run();
         });
 
-        var editTaskButton = new JButton("Edit Task");
-        menuBar.add(editTaskButton);
+        var completeTaskButton = new JButton("Complete Task");
+        menuBar.add(completeTaskButton);
+        completeTaskButton.addActionListener(e -> new BaseEditScreen("Complete", this::completeTask));
 
         var deleteTaskButton = new JButton("Delete Task");
         menuBar.add(deleteTaskButton);
+        deleteTaskButton.addActionListener(e -> new BaseEditScreen("Remove", this::removeTask));
 
         GridBagConstraints task_Panel = new GridBagConstraints();
         task_Panel.fill = GridBagConstraints.BOTH;
@@ -92,21 +91,25 @@ public class MainScreen extends BaseClient {
         frame.getContentPane().add(exitButton, gbc_exitButton);
     }
 
+    private String importanceName(Importance i) {
+        return i != null ? i.name().substring(0, 1).toUpperCase() + i.name().substring(1).toLowerCase() : "";
+    }
+
     private JTable createTable() {
-        
+
         String[] header = new String[]{"Description", "Importance", "Due", "completed"};
         String[][] data = new String[tasks.size()][4];
-        DateTimeFormatter jeanMi = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        DateTimeFormatter jeanLuc = DateTimeFormatter.ofPattern("dd LLLL yyyy");
 
         for (int i = 0; i < tasks.size(); i++) {
             var task = tasks.get(i);
-            String[] temp = new String[]{task.description,
-                    task.importance != null
-                            ? task.importance.toString().substring(0, 1).toUpperCase()
-                            + task.importance.toString().substring(1).toLowerCase()
-                            : "",
-                    task.dueDate != null ? task.dueDate.format(jeanMi) : "", task.completed ? "V" : "X" // V for false,
-                    // X for true.
+            String[] temp = new String[]{
+                    task.description,
+                    importanceName(task.importance),
+                    task.dueDate != null ? task.dueDate.format(jeanLuc) : "",
+                    // V for false, X for true.
+                    task.completed ? "V" : "X"
+
             };
             data[i] = temp;
         }
@@ -156,11 +159,20 @@ public class MainScreen extends BaseClient {
         sendQuery(new Query(Command.ADD, task));
     }
 
+    public void removeTask(Task task) {
+        sendQuery(new Query(Command.REMOVE, task));
+    }
+
+
+    public void completeTask(Task task) {
+        var completeTask = new TaskBuilder(task).setCompleted(true).build();
+        sendQuery(new Query(Command.EDIT, completeTask));
+    }
+
     @Override
     public int nextAvailableId() {
         return super.nextAvailableId();
     }
 
-   
 
 }

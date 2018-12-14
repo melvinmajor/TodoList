@@ -85,7 +85,7 @@ public class AddTaskScreen extends JFrame {
         // year
         yearChoice = new Choice();
         int currentYear = LocalDate.now().getYear();
-        for(int i= currentYear;  i<currentYear + 30; i++) {
+        for (int i = currentYear; i < currentYear + 30; i++) {
             yearChoice.add(String.valueOf(i));
         }
 

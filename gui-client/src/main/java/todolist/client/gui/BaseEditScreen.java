@@ -5,7 +5,7 @@ import todolist.common.Task;
 import javax.swing.*;
 import java.util.function.Consumer;
 
-public abstract class BaseEditScreen extends JFrame {
+public class BaseEditScreen extends JFrame {
     private final String type;
     private final Consumer<Task> onSelectAction;
     private final JButton actionButton;
