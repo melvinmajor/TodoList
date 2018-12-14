@@ -157,7 +157,6 @@ public class MainScreen extends BaseClient {
                 else if (index == 3) sortType = SortType.DUE_DATE;
 
                 setTable();
-                System.out.println("aaaaaaaa" + MainScreen.this.sortType);
             }
         });
 
