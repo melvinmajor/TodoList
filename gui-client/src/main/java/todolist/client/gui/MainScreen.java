@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import todolist.client.base.BaseClient;
+import todolist.common.Command;
+import todolist.common.Query;
 import todolist.common.Task;
 
 public class MainScreen extends BaseClient {
@@ -65,7 +67,7 @@ public class MainScreen extends BaseClient {
 		var addTaskButton = new JButton("Add Task");
 		menuBar.add(addTaskButton);
 		addTaskButton.addActionListener(e -> {
-			new AddTask().run();
+			new AddTask(this).run();
 		});
 
 		var editTaskButton = new JButton("Edit Task");
@@ -143,4 +145,15 @@ public class MainScreen extends BaseClient {
 		setTable();
 		return temp;
 	}
+	
+	public void addTask (Task task ) {
+		sendQuery(new Query(Command.ADD, task));
+	}
+
+	@Override
+	public int nextAvailableId() {
+		return super.nextAvailableId();
+	}
+	
+	
 }

@@ -14,7 +14,7 @@ import java.time.Month;
 import java.util.List;
 
 public class AddTask extends JFrame {
-
+	private final MainScreen parent;
 	/**
 	 * Launch the frame to add tasks in the GUI client.
 	 */
@@ -28,7 +28,8 @@ public class AddTask extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddTask() {
+	public AddTask(MainScreen parent) {
+		this.parent = parent;
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 450, 260);
 		JPanel contentPane = new JPanel();
@@ -165,10 +166,13 @@ public class AddTask extends JFrame {
 
 			var creationDate = LocalDate.now();
 
-			builder.setCompleted(false).setCreationDate(creationDate).build();
+			builder.setCompleted(false).setCreationDate(creationDate).setId(parent.nextAvailableId());
 
+			System.out.println(builder.validate());
+			
 			// TODO send query
-
+			parent.addTask(builder.build());
+			System.out.println(builder.build());
 			// TODO reset fields
 		});
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
