@@ -5,10 +5,12 @@ import todolist.common.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,6 +18,8 @@ public class MainScreen extends BaseClient {
 
     private JFrame frame;
     private JScrollPane scrollPane = new JScrollPane();
+
+    private SortType sortType = SortType.DUE_DATE;
 
     /**
      * Launch the main frame of the GUI client.
@@ -96,36 +100,74 @@ public class MainScreen extends BaseClient {
     }
 
     private JTable createTable() {
+        var headerItemByType = new LinkedHashMap<SortType, String>();
+        headerItemByType.put(SortType.DESCRIPTION, "Description");
+        headerItemByType.put(SortType.IMPORTANCE, "Importance");
+        headerItemByType.put(SortType.COMPLETED, "Completed");
+        headerItemByType.put(SortType.DUE_DATE, "Due");
 
-        String[] header = new String[]{"Description", "Importance", "Due", "completed"};
+        var header = headerItemByType
+                .keySet()
+                .stream()
+                .map(e -> e == this.sortType ? headerItemByType.get(e) + " ^" : headerItemByType.get(e))
+                .toArray(String[]::new);
+
         String[][] data = new String[tasks.size()][4];
         DateTimeFormatter jeanLuc = DateTimeFormatter.ofPattern("dd LLLL yyyy");
 
+        // TODO sort
+        switch (sortType) {
+            case DESCRIPTION:
+                break;
+            case IMPORTANCE:
+                break;
+            case DUE_DATE:
+                break;
+            case COMPLETED:
+                break;
+        }
+
         for (int i = 0; i < tasks.size(); i++) {
             var task = tasks.get(i);
-            String[] temp = new String[]{
+            var temp = new String[]{
                     task.description,
                     importanceName(task.importance),
                     task.dueDate != null ? task.dueDate.format(jeanLuc) : "",
                     // V for false, X for true.
                     task.completed ? "V" : "X"
-
             };
+
             data[i] = temp;
         }
-        TableModel model = new DefaultTableModel(data, header) {
+        var model = new DefaultTableModel(data, header) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         var table = new JTable(data, header);
         table.setModel(model);
+
+        table.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                var index = table.columnAtPoint(e.getPoint());
+                if (index == 0) sortType = SortType.DESCRIPTION;
+                else if (index == 1) sortType = SortType.IMPORTANCE;
+                else if (index == 2) sortType = SortType.COMPLETED;
+                else if (index == 3) sortType = SortType.DUE_DATE;
+
+                setTable();
+                System.out.println("aaaaaaaa" + MainScreen.this.sortType);
+            }
+        });
+
         return table;
     }
 
     private void setTable() {
         scrollPane.getViewport().removeAll();
         var table = createTable();
+        scrollPane.getViewport().add(table.getTableHeader());
         scrollPane.setViewportView(table);
     }
 
