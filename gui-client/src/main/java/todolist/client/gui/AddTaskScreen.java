@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.Month;
@@ -160,6 +161,7 @@ public class AddTaskScreen extends JFrame {
         // add button
         addButton = new JButton("Add");
         addButton.addActionListener(e -> new AddTask(this, parent).onAddButtonPressed());
+        addButton.addActionListener(e -> this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
         // ???
         GridBagConstraints gbc_addButton = new GridBagConstraints();
