@@ -37,11 +37,12 @@ public class AddTaskScreen extends JFrame {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setBounds(100, 100, 450, 260);
 
+        // The main frame of Add Task.
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
 
-        // ???
+        // Grid Bag Layout in order to have the frame kind of "responsive".
         GridBagLayout gbl_contentPane = new GridBagLayout();
         gbl_contentPane.columnWidths = new int[]{94, 4, 66, 151, 93, 0};
         gbl_contentPane.rowHeights = new int[]{22, 22, 20, 83, 23, 0};
@@ -49,7 +50,7 @@ public class AddTaskScreen extends JFrame {
         gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
         contentPane.setLayout(gbl_contentPane);
 
-        // day format
+        // day format.
         var intFormat = NumberFormat.getIntegerInstance();
         var numberFormatter = new NumberFormatter(intFormat);
         numberFormatter.setValueClass(Integer.class);
@@ -57,11 +58,12 @@ public class AddTaskScreen extends JFrame {
         numberFormatter.setMinimum(1);
         numberFormatter.setMaximum(31);
 
-        // day
+        // day.
         dayField = new JFormattedTextField(numberFormatter);
         dayField.setColumns(10);
 
-        // ???
+        // Due date of the frame.
+        // Day field.
         GridBagConstraints gbc_dayField = new GridBagConstraints();
         gbc_dayField.fill = GridBagConstraints.BOTH;
         gbc_dayField.insets = new Insets(0, 0, 5, 5);
@@ -70,11 +72,12 @@ public class AddTaskScreen extends JFrame {
         gbc_dayField.gridy = 0;
         contentPane.add(dayField, gbc_dayField);
 
-        // month
+        // month.
         monthChoice = new Choice();
         List.of(Month.values()).forEach(e -> monthChoice.add(e.name().toLowerCase()));
 
-        // ???
+        // Due date of the field.
+        // Month field.
         GridBagConstraints gbc_monthChoice = new GridBagConstraints();
         gbc_monthChoice.fill = GridBagConstraints.BOTH;
         gbc_monthChoice.insets = new Insets(0, 0, 5, 5);
@@ -82,15 +85,15 @@ public class AddTaskScreen extends JFrame {
         gbc_monthChoice.gridy = 0;
         contentPane.add(monthChoice, gbc_monthChoice);
 
-
-        // year
+        // year.
         yearChoice = new Choice();
         int currentYear = LocalDate.now().getYear();
         for (int i = currentYear; i < currentYear + 30; i++) {
             yearChoice.add(String.valueOf(i));
         }
 
-        // ???
+        // Due date of the field.
+        // Year field.
         GridBagConstraints gbc_yearField = new GridBagConstraints();
         gbc_yearField.fill = GridBagConstraints.BOTH;
         gbc_yearField.insets = new Insets(0, 0, 5, 0);
@@ -98,9 +101,10 @@ public class AddTaskScreen extends JFrame {
         gbc_yearField.gridy = 0;
         contentPane.add(yearChoice, gbc_yearField);
 
+        // due date label.
         var dueDateLabel = new JLabel("Due Date:");
 
-        // ???
+        // Grid Bag Layout of the due date text label.
         GridBagConstraints gbc_dueDateLabel = new GridBagConstraints();
         gbc_dueDateLabel.fill = GridBagConstraints.BOTH;
         gbc_dueDateLabel.insets = new Insets(0, 0, 5, 5);
@@ -108,16 +112,16 @@ public class AddTaskScreen extends JFrame {
         gbc_dueDateLabel.gridy = 0;
         contentPane.add(dueDateLabel, gbc_dueDateLabel);
 
-        // importance label
+        // importance label.
         var importanceLabel = new JLabel("Importance:");
 
-        // importance choice
+        // importance choice.
         importanceChoice = new Choice();
         importanceChoice.add("none");
         List.of(Importance.values())
                 .forEach(e -> importanceChoice.add(e.name().toLowerCase()));
 
-        // ???
+        // Grid Bag Layout of the importance text label.
         GridBagConstraints gbc_textLabel = new GridBagConstraints();
         gbc_textLabel.fill = GridBagConstraints.BOTH;
         gbc_textLabel.insets = new Insets(0, 0, 5, 5);
@@ -126,7 +130,7 @@ public class AddTaskScreen extends JFrame {
         gbc_textLabel.gridy = 1;
         contentPane.add(importanceLabel, gbc_textLabel);
 
-        // ???
+        // Grid Bag Layout of the importance choice.
         GridBagConstraints gbc_importanceChoice = new GridBagConstraints();
         gbc_importanceChoice.fill = GridBagConstraints.BOTH;
         gbc_importanceChoice.insets = new Insets(0, 0, 5, 5);
@@ -135,10 +139,10 @@ public class AddTaskScreen extends JFrame {
         gbc_importanceChoice.gridy = 1;
         contentPane.add(importanceChoice, gbc_importanceChoice);
 
-        // description
+        // description label.
         var descriptionLabel = new JLabel("Description:");
 
-        // ???
+        // Grid Bag Layout of the description label.
         GridBagConstraints gbc_descriptionLabel = new GridBagConstraints();
         gbc_descriptionLabel.fill = GridBagConstraints.BOTH;
         gbc_descriptionLabel.insets = new Insets(0, 0, 5, 5);
@@ -147,9 +151,10 @@ public class AddTaskScreen extends JFrame {
         gbc_descriptionLabel.gridy = 2;
         contentPane.add(descriptionLabel, gbc_descriptionLabel);
 
-        // description
+        // description area.
         descriptionArea = new JTextArea();
 
+        // Grid Bag Layout of the description area.
         GridBagConstraints gbc_descriptionArea = new GridBagConstraints();
         gbc_descriptionArea.fill = GridBagConstraints.BOTH;
         gbc_descriptionArea.insets = new Insets(0, 0, 5, 0);
@@ -158,12 +163,12 @@ public class AddTaskScreen extends JFrame {
         gbc_descriptionArea.gridy = 3;
         contentPane.add(descriptionArea, gbc_descriptionArea);
 
-        // add button
+        // add button.
         addButton = new JButton("Add");
         addButton.addActionListener(e -> new AddTask(this, parent).onAddButtonPressed());
         addButton.addActionListener(e -> this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
 
-        // ???
+        // Grid Bag Layout of the add button.
         GridBagConstraints gbc_addButton = new GridBagConstraints();
         gbc_addButton.fill = GridBagConstraints.BOTH;
         gbc_addButton.gridx = 4;

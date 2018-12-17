@@ -95,6 +95,12 @@ public class MainScreen extends BaseClient {
         frame.getContentPane().add(exitButton, gbc_exitButton);
     }
 
+    /**
+     * A method which reformats the importance name, which is totally upper case, in
+     * a clean one (first character upper case, the rest in lower case).
+     * @param i The importance name.
+     * @return A reformatted version of the importance name.
+     */
     private String importanceName(Importance i) {
         return i != null ? i.name().substring(0, 1).toUpperCase() + i.name().substring(1).toLowerCase() : "";
     }
@@ -159,7 +165,7 @@ public class MainScreen extends BaseClient {
                 setTable();
             }
         });
-
+        
         return table;
     }
 
@@ -214,6 +220,5 @@ public class MainScreen extends BaseClient {
     public int nextAvailableId() {
         return super.nextAvailableId();
     }
-
 
 }

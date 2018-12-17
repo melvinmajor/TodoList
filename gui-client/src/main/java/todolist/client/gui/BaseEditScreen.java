@@ -10,7 +10,11 @@ public class BaseEditScreen extends JFrame {
     private final Consumer<Task> onSelectAction;
     private final JButton actionButton;
 
-
+    /**
+     * A method which checks a method and perform an edit of it.
+     * @param type the name of the task that is being edited.
+     * @param onSelectAction perform an action on selection.
+     */
     public BaseEditScreen(String type, Consumer<Task> onSelectAction) {
         this.type = type;
         this.onSelectAction = onSelectAction;
@@ -28,6 +32,5 @@ public class BaseEditScreen extends JFrame {
 
         setTitle("TodoList - " + type + " Task");
     }
-
 
 }

@@ -10,12 +10,20 @@ import java.time.Month;
 public class AddTask {
     private final AddTaskScreen addTaskScreen;
     private final MainScreen mainScreen;
-
+    
+    /**
+     * Initialization method, it links the main screen and the add task screen.
+     * @param addTaskScreen The screen when add task frame is requested.
+     * @param mainScreen The screen of the main frame of the GUI client.
+     */
     public AddTask(AddTaskScreen addTaskScreen, MainScreen mainScreen) {
         this.addTaskScreen = addTaskScreen;
         this.mainScreen = mainScreen;
     }
 
+    /**
+     * A method which stores the user content in a new task.
+     */
     public void onAddButtonPressed() {
         var builder = new TaskBuilder();
 
