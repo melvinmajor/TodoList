@@ -3,7 +3,10 @@ package todolist.client.cli.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * Provides the ability to create a table representation of tasks
@@ -28,7 +31,11 @@ public class TablePrinter {
         var lines = new ArrayList<String>();
         lines.add("");
 
-        lines.add(makeLine(header, colLength, true));
+
+        var coloredHeader = header.stream()
+                .map(s -> "@|blue " + s + "|@")
+                .collect(Collectors.toList());
+        lines.add(makeLine(coloredHeader, colLength, true));
 
         List<String> underline = Arrays.stream(colLength).mapToObj(e -> {
             if (e == 0) return "";
@@ -43,7 +50,7 @@ public class TablePrinter {
 
         lines.add("");
 
-        lines.forEach(System.out::println);
+        for (String l : lines) System.out.println(ansi().render(l));
     }
 
     private String makeLine(List<String> strings, int[] colLength, boolean spaces) {
@@ -59,7 +66,7 @@ public class TablePrinter {
             var str = strings.get(i);
             line.append(str);
 
-            int diff = colLength[i] - str.length();
+            int diff = colLength[i] - escapedStringLength(str);
             for (int j = 0; j < diff; j++) line.append(" ");
         }
         if (spaces) line.append(" ");
@@ -81,7 +88,7 @@ public class TablePrinter {
 
     private int maxLength(List<String> strings) {
         return strings.stream()
-                .mapToInt(String::length)
+                .mapToInt(this::escapedStringLength)
                 .max()
                 .orElse(0);
     }
@@ -94,6 +101,15 @@ public class TablePrinter {
                 .limit(1)
                 .findAny()
                 .isEmpty();
+    }
+
+    private final Pattern colorStartPattern = Pattern.compile("@\\|\\w+ ");
+    private final Pattern colorEndPattern = Pattern.compile("\\|@");
+
+    private int escapedStringLength(String input) {
+        var escapedString = colorStartPattern.matcher(input).replaceAll("");
+        escapedString = colorEndPattern.matcher(escapedString).replaceAll("");
+        return escapedString.length();
     }
 
 }

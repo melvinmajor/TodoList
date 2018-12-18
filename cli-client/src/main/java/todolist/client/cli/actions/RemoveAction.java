@@ -3,6 +3,8 @@ package todolist.client.cli.actions;
 import todolist.common.Command;
 import todolist.common.Task;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class RemoveAction extends EditAction {
     @Override
     public String getName() {
@@ -16,7 +18,7 @@ public class RemoveAction extends EditAction {
 
     @Override
     protected Task editTask(Task task) {
-        System.out.println("Task removed");
+        System.out.println(ansi().fgGreen().a("Task removed"));
         return task;
     }
 }

@@ -9,13 +9,15 @@ import todolist.common.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public abstract class EditAction implements Action {
     @Override
     public final boolean execute(Data data) {
         var tasks = CLIClient.instance.getTasks();
 
         if (tasks.isEmpty()) {
-            System.out.println("There is no tasks");
+            System.out.println(ansi().fgRed().a("There are no tasks!"));
             return false;
         }
 

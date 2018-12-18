@@ -7,6 +7,8 @@ import todolist.client.cli.parsing.Parser;
 import java.util.Objects;
 import java.util.Optional;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 /**
  * Util class used in order to obtain a value from the user and then convert it with a parser
  */
@@ -27,12 +29,12 @@ public class PromptUtil<T> {
 
         T parsed;
 
-        var msg = promptMsg;
-        if (canIgnore) msg += " (optional)";
-        msg += "> ";
+        var msg = "@|blue " + promptMsg + "|@";
+        if (canIgnore) msg += "@|yellow (optional)|@";
+        msg += "@|blue > |@";
 
         while (true) {
-            System.out.print(msg);
+            System.out.print(ansi().render(msg));
             if (!scanner.hasNextLine()) return Optional.empty();
 
             String input = scanner.nextLine().replaceAll(" +", " ");
@@ -43,7 +45,7 @@ public class PromptUtil<T> {
                 parsed = parser.parse(input);
                 break;
             } catch (ParseException e) {
-                System.err.println(parser.onError());
+                System.err.println(ansi().render(parser.onError()));
             }
         }
 

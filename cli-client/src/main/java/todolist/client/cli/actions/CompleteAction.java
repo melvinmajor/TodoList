@@ -4,6 +4,8 @@ import todolist.common.Command;
 import todolist.common.Task;
 import todolist.common.TaskBuilder;
 
+import static org.fusesource.jansi.Ansi.ansi;
+
 public class CompleteAction extends EditAction {
     @Override
     public String getName() {
@@ -12,7 +14,7 @@ public class CompleteAction extends EditAction {
 
     @Override
     protected Task editTask(Task task) {
-        System.out.println("Task completed");
+        System.out.println(ansi().fgGreen().a("Task completed"));
         return new TaskBuilder(task).setCompleted(true).build();
     }
 
