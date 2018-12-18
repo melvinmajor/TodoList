@@ -49,7 +49,8 @@ abstract class LimitedSetParser<T> implements Parser<T> {
                 .map(name -> {
                     var shortName = shortByLongName.get(name);
                     var end = name.substring(shortName.length());
-                    return end.isEmpty() ? shortName : shortName + "[" + end + "]";
+                    var coloredShortName = "@|green " + shortName + "|@";
+                    return end.isEmpty() ? coloredShortName : coloredShortName + "[@|cyan " + end + "|@]";
                 }).collect(Collectors.joining(" | "));
     }
 

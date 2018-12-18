@@ -45,7 +45,7 @@ public class PromptUtil<T> {
                 parsed = parser.parse(input);
                 break;
             } catch (ParseException e) {
-                System.err.println(parser.onError());
+                System.err.println(ansi().render(parser.onError()));
             }
         }
 
