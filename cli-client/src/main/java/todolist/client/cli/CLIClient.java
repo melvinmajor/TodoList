@@ -11,6 +11,9 @@ import java.util.*;
 
 import static todolist.client.cli.parsing.Parsers.actionParser;
 
+/**
+ * Cli implementation of BaseClient
+ */
 public class CLIClient extends BaseClient {
     public static final CLIClient instance = new CLIClient();
 

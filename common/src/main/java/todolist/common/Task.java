@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * The task class
+ */
 public class Task implements Serializable {
     public final int id;
     public final String description;

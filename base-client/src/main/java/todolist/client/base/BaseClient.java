@@ -12,6 +12,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * a basic implementation of the Client interface
+ */
 public abstract class BaseClient implements Client {
     private int port;
     private Connection<Collection<Task>> connection;

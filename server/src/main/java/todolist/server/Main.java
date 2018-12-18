@@ -2,6 +2,10 @@ package todolist.server;
 
 import java.util.List;
 
+/**
+ * the main method.
+ * @param args the args, --port followed by a port number
+ */
 public class Main {
     public static void main(String[] args) {
         List<String> argsList = List.of(args);

@@ -9,6 +9,9 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * the server class
+ */
 public class Server {
     private final TaskManager taskManager = new TaskManager();
     private final List<Connection> connections = new ArrayList<>();

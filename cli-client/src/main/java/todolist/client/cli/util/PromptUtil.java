@@ -7,6 +7,9 @@ import todolist.client.cli.parsing.Parser;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Util class used in order to obtain a value from the user and then convert it with a parser
+ */
 public class PromptUtil<T> {
     private final Parser<T> parser;
     private String promptMsg;

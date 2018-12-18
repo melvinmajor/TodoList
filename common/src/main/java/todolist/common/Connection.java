@@ -7,6 +7,9 @@ import java.net.Socket;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * Represents a connection between the server and a client
+ */
 public class Connection<T> {
     private final ObjectOutputStream out;
     private final ObjectInputStream in;

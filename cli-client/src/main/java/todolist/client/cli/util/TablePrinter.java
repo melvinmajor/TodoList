@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Provides the ability to create a table representation of tasks
+ */
 public class TablePrinter {
     private final List<String> header;
     private final List<List<String>> content;

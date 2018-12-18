@@ -4,6 +4,9 @@ import todolist.common.Task;
 
 import java.util.Collection;
 
+/**
+ * Represents a client
+ */
 public interface Client {
     void run();
 
