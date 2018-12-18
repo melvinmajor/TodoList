@@ -1,7 +1,6 @@
 package todolist.client.cli.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -31,46 +30,50 @@ public class TablePrinter {
         var lines = new ArrayList<String>();
         lines.add("");
 
-
         var coloredHeader = header.stream()
                 .map(s -> "@|blue " + s + "|@")
                 .collect(Collectors.toList());
-        lines.add(makeLine(coloredHeader, colLength, true));
+        lines.add(makeLine(coloredHeader, colLength));
 
-        List<String> underline = Arrays.stream(colLength).mapToObj(e -> {
-            if (e == 0) return "";
-            var builder = new StringBuilder();
-            for (int i = 0; i < e + 2; i++) builder.append("─");
-            return builder.toString();
-        }).collect(Collectors.toList());
+        lines.add(makeUnderline(colLength));
 
-        lines.add(makeLine(underline, colLength, false));
-
-        content.forEach(l -> lines.add(makeLine(l, colLength, true)));
+        content.forEach(l -> lines.add(makeLine(l, colLength)));
 
         lines.add("");
 
         for (String l : lines) System.out.println(ansi().render(l));
     }
 
-    private String makeLine(List<String> strings, int[] colLength, boolean spaces) {
+    private String makeUnderline(int[] colLength) {
+        var builder = new StringBuilder();
+        for (int i = 0; i < colLength.length; i++) {
+            var c = colLength[i];
+            if (c == 0) continue;
+            int padding = i == 0 ? 1 : 2;
+            for (int j = 0; j < padding + c; j++) builder.append("─");
+            if (i != colLength.length - 1) builder.append("┼");
+        }
+        return builder.toString();
+    }
+
+    private String makeLine(List<String> strings, int[] colLength) {
         var line = new StringBuilder();
         var separator = "│";
         for (int i = 0; i < strings.size(); i++) {
             if (colLength[i] == 0) continue;
 
-            if (spaces && line.length() != 0) line.append(" ");
-            line.append(separator);
-            if (spaces) line.append(" ");
+            if (line.length() != 0) {
+                line.append(separator);
+                line.append(" ");
+            }
 
             var str = strings.get(i);
             line.append(str);
+            line.append(" ");
 
             int diff = colLength[i] - escapedStringLength(str);
             for (int j = 0; j < diff; j++) line.append(" ");
         }
-        if (spaces) line.append(" ");
-        line.append(separator);
         return line.toString();
     }
 
