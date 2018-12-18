@@ -31,7 +31,11 @@ public class TablePrinter {
         var lines = new ArrayList<String>();
         lines.add("");
 
-        lines.add(makeLine(header, colLength, true));
+
+        var coloredHeader = header.stream()
+                .map(s -> "@|blue " + s + "|@")
+                .collect(Collectors.toList());
+        lines.add(makeLine(coloredHeader, colLength, true));
 
         List<String> underline = Arrays.stream(colLength).mapToObj(e -> {
             if (e == 0) return "";
