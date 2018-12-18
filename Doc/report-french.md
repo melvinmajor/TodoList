@@ -1,7 +1,7 @@
 # Rapport du projet TodoList
 
 ## Groupe 30
-Notre groupe est consitué de 3 personnes :
+Notre groupe est constitué de 3 personnes :
 - Melvin Campos Casares (_**@melvinmajor**_)
 - Maxime Liber (_**@LiberTMx**_)
 - Hubert Van De Walle (_**@HE201496**_)
@@ -9,11 +9,12 @@ Notre groupe est consitué de 3 personnes :
 ## GitHub
 
 __Lien du repository :__ https://github.com/melvinmajor/TodoList
+
 __Lien du Wiki :__ https://github.com/melvinmajor/TodoList/wiki
 
 ## Cahier des charges - descriptif
 
-### Quel est notre projet ?
+### Quel est notre projet ?
 
 Notre projet est une liste de tâches à faire.
 
@@ -46,7 +47,7 @@ Parce que nous souhaitons avoir quelque chose de réellement complet, nous pourr
 - Une nouvelle variable qui stockera s'il s'agit d'un travail de groupe ou non,
 - D'autres options de tri ou filtre,
 - Une barre de progression pour des éléments précis comme la date d'échéance ou l'importance,
-- Une API JSON pour l'intégration du programme dans divers applications par la suite (site internet, etc.).
+- Une API JSON pour l'intégration du programme dans diverses applications par la suite (site internet, etc.).
 
 ## Diagramme UML
 
@@ -60,10 +61,10 @@ Ce diagramme UML est celui du modèle MVC (partie modèle uniquement).
 
 ### Utilisation de 2 IDE différents avec __Maven__
 
-L'utilisation de deux IDE différents n'était peut-être pas la meilleure option en soit mais nous y avons trouvé un certain intérêt.
+L'utilisation de deux Integrated Development Environment (IDE) différents n'était peut-être pas la meilleure option en soi, mais nous y avons trouvé un certain intérêt.
 [IntelliJ IDEA Community Edition](https://www.jetbrains.com/idea/) est un IDE très performant et bien meilleur qu'[Eclipse](https://www.eclipse.org).
 
-Etonnamment, notre gestionnaire de dépendance [*"Maven"*](https://maven.apache.org/) fonctionnait bien mieux et de façon bien plus transparente avec IntelliJ qu'Eclipse.
+Étonnamment, notre gestionnaire de dépendance [*"Maven"*](https://maven.apache.org/) fonctionnait bien mieux et de façon bien plus transparente avec IntelliJ qu'Eclipse.
 Maven est pourtant conçu par les développeurs derrière Eclipse.
 
 Il ne fut pas rare de devoir reconstruire notre workspace (lors de la création du serveur et puis de l'interface graphique) ou de devoir effectuer un refresh du workspace à la moindre synchronisation avec Git.
@@ -75,13 +76,13 @@ En effet, Oracle ayant changé les conditions d'utilisations de Java, il nous a 
 
 Grâce à cela, nous avons profité d'un JDK avec Java Runtime Environment (JRE) intégré, ce qui nous à évité d'autres contraintes d'implémentation avec Eclipse.
 
-### JavaFX ou Swing ?
+### JavaFX ou Swing ?
 
-Au départ, nous voulions créer l'interface grpahique en JavaFX et non Swing.
-Cette décision était prise étant donné les problèmes majeurs lié aux DPI des écrans (Windows et Linux impacté contrairement à macOS), entre autres choses.
+Au départ, nous voulions créer l'interface graphique en JavaFX et non Swing.
+Cette décision était prise étant donné les problèmes majeurs liés aux DPI des écrans (Windows et Linux impacté contrairement à macOS), entre autres choses.
 
 Malheureusement, on a très vite remarqué un manque de temps crucial et nous avons préféré utiliser Swing avec Window Builder comme point de départ.
-Cela à occasionné un code très lourd et difficile à séparer, ce qui nous a permis de comprendre l'intérêt minime des systèmes WYSIWYG (What You See Is What You Get).
+Cela a occasionné un code très lourd et difficile à séparer, ce qui nous a permis de comprendre l'intérêt minime des systèmes WYSIWYG (What You See Is What You Get).
 
 ## Pistes d'amélioration éventuelles
 
