@@ -3,7 +3,7 @@ package todolist.client.cli;
 import todolist.client.base.BaseClient;
 import todolist.client.cli.actions.*;
 import todolist.client.cli.util.PromptUtil;
-import todolist.common.Query;
+import todolist.common.Packet;
 import todolist.common.Task;
 
 import java.time.LocalDate;
@@ -70,7 +70,7 @@ public class CLIClient extends BaseClient {
         if (action.command() != null) {
             var task = data.editedTask;
             var command = action.command();
-            sendQuery(new Query(command, task));
+            sendPacket(new Packet(command, task));
         }
 
         if (data.closeClient) {

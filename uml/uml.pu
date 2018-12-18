@@ -43,7 +43,7 @@ class Server {
     ==
     run(): void
     waitForConnections(): void
-    handleAction(query: Query): boolean
+    handleAction(packet: Query): boolean
     updateClients(): void
 }
 
@@ -122,7 +122,7 @@ class BaseClient {
     - connect(): void
     - onExit(ignored: Connection<T>): void
     # disconnect(): void
-    # sendQuery(query: Query): void
+    # sendQuery(packet: Query): void
     + onUpdate(tasks: Collection<Task>): boolean 
     # nextAvailableId(): int
 }

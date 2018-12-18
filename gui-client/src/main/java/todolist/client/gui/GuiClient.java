@@ -2,7 +2,7 @@ package todolist.client.gui;
 
 import todolist.client.base.BaseClient;
 import todolist.client.gui.util.SwingUtils;
-import todolist.common.Query;
+import todolist.common.Packet;
 import todolist.common.Task;
 
 import java.util.Collection;
@@ -58,8 +58,8 @@ public class GuiClient extends BaseClient {
     }
 
     @Override
-    public void sendQuery(Query query) {
-        super.sendQuery(query);
+    public void sendPacket(Packet packet) {
+        super.sendPacket(packet);
     }
 
     public List<Task> getTasks() {

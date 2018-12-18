@@ -2,7 +2,7 @@ package todolist.server;
 
 import todolist.common.Command;
 import todolist.common.Connection;
-import todolist.common.Query;
+import todolist.common.Packet;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -44,21 +44,21 @@ public class Server {
         }
     }
 
-    private boolean handleAction(Query query) {
-        System.out.println("received command " + query.command);
-        switch (query.command) {
+    private boolean handleAction(Packet packet) {
+        System.out.println("received command " + packet.command);
+        switch (packet.command) {
             case REMOVE:
-                taskManager.removeTask(query.task);
+                taskManager.removeTask(packet.task);
                 break;
             case EDIT:
             case ADD:
-                taskManager.addOrEditTask(query.task);
+                taskManager.addOrEditTask(packet.task);
                 break;
             case CLOSE:
                 return true;
         }
 
-        if (query.command != Command.INIT) {
+        if (packet.command != Command.INIT) {
             // TODO save to file
         }
 

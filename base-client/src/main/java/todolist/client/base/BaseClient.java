@@ -2,7 +2,7 @@ package todolist.client.base;
 
 import todolist.common.Command;
 import todolist.common.Connection;
-import todolist.common.Query;
+import todolist.common.Packet;
 import todolist.common.Task;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public abstract class BaseClient implements Client {
     public void run() {
         connect();
         connection.listen();
-        sendQuery(new Query(Command.INIT, null));
+        sendPacket(new Packet(Command.INIT, null));
     }
 
     private void connect() {
@@ -42,11 +42,11 @@ public abstract class BaseClient implements Client {
     }
 
     protected void disconnect() {
-        connection.send(new Query(Command.CLOSE, null));
+        connection.send(new Packet(Command.CLOSE, null));
     }
 
-    protected void sendQuery(Query query) {
-        connection.send(query);
+    protected void sendPacket(Packet packet) {
+        connection.send(packet);
     }
 
     @Override

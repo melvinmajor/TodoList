@@ -1,7 +1,7 @@
 package todolist.common;
 
 /**
- * used in Query with the server
+ * used in Packet with the server
  */
 public enum Command {
     ADD, REMOVE, EDIT, INIT, CLOSE

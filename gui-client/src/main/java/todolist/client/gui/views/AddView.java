@@ -5,7 +5,7 @@ import todolist.client.gui.util.DisplayName;
 import todolist.client.gui.util.SwingUtils;
 import todolist.common.Command;
 import todolist.common.Importance;
-import todolist.common.Query;
+import todolist.common.Packet;
 import todolist.common.TaskBuilder;
 
 import javax.swing.*;
@@ -97,7 +97,7 @@ public class AddView implements View {
                 .setImportance(importance)
                 .build();
 
-        GuiClient.instance.sendQuery(new Query(Command.ADD, task));
+        GuiClient.instance.sendPacket(new Packet(Command.ADD, task));
 
         goToDefaultView();
     }
