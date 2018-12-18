@@ -6,9 +6,10 @@ import todolist.client.cli.util.TablePrinter;
 import todolist.common.Command;
 import todolist.common.Task;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class ListAction implements Action {
 
@@ -22,7 +23,7 @@ public class ListAction implements Action {
         var tasks = CLIClient.instance.getTasks();
 
         if (tasks.isEmpty()) {
-            System.out.println("There is no tasks!");
+            System.out.println(ansi().fgRed().a("There are no tasks!"));
             return true;
         }
 

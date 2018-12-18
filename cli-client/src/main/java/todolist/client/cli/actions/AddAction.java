@@ -7,6 +7,7 @@ import todolist.common.TaskBuilder;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
+import static org.fusesource.jansi.Ansi.ansi;
 import static todolist.client.cli.parsing.Parsers.*;
 
 public class AddAction implements Action {
@@ -75,7 +76,7 @@ public class AddAction implements Action {
 
         data.editedTask = builder.build();
 
-        System.out.println("Task created");
+        System.out.println(ansi().fgGreen().a("Task created"));
         return true;
     }
 

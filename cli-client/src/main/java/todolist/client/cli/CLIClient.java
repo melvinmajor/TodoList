@@ -9,6 +9,7 @@ import todolist.common.Task;
 import java.time.LocalDate;
 import java.util.*;
 
+import static org.fusesource.jansi.Ansi.ansi;
 import static todolist.client.cli.parsing.Parsers.actionParser;
 
 /**
@@ -50,8 +51,8 @@ public class CLIClient extends BaseClient {
 
     @Override
     public void onConnectionError() {
-        System.err.println("An error occurred while attempting to connect to the server");
-        System.err.println("Is the server running ?");
+        System.err.println(ansi().fgRed().a("An error occurred while attempting to connect to the server"));
+        System.err.println(ansi().fgRed().a("Is the server running ?"));
         System.exit(1);
     }
 
