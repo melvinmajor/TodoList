@@ -1,7 +1,10 @@
 ># TodoList
+>
 >A project of the lesson of Dev. App. (Java) 2nd Bachelor at EPHEC 
 
 ## Our Team
+
+Our group number is : _**30**_
 
 Our team is composed of 3 people :
 - Melvin Campos Casares (_**@melvinmajor**_)
