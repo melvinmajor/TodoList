@@ -63,7 +63,7 @@ Parce que nous souhaitons avoir quelque chose de réellement complet, nous pourr
 
 Ce diagramme UML est celui du modèle MVC (partie modèle uniquement).
 
-<p align="center"><img src ="https://github.com/melvinmajor/TodoList/blob/uml/uml-model.png" /></p>
+<p align="center"><img src ="https://github.com/melvinmajor/TodoList/blob/master/uml/uml-model.png" /></p>
 
 ## Choix d'implémentation effectués
 
