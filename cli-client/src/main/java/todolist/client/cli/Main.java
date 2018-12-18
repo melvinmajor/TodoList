@@ -1,9 +1,12 @@
 package todolist.client.cli;
 
+import org.fusesource.jansi.AnsiConsole;
+
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        AnsiConsole.systemInstall();
         List<String> argsList = List.of(args);
 
         int port = 8002;
