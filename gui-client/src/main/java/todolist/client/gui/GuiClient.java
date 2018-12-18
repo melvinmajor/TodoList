@@ -33,6 +33,7 @@ public class GuiClient extends BaseClient {
     @Override
     public void onConnectionError() {
         SwingUtils.errorPopup("Connection with the server failed");
+        onExit();
     }
 
     @Override
