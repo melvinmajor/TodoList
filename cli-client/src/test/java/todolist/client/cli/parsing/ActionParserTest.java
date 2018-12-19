@@ -24,7 +24,7 @@ class ActionParserTest {
     void testList() {
         Action action = null;
         try {
-            action = Parsers.actionParser.parse("ls");
+            action = Parsers.actionParser.parse("list");
         } catch (ParseException e) {
             fail();
         }
