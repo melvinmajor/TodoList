@@ -84,4 +84,9 @@ public class AddAction implements Action {
     public Command command() {
         return Command.ADD;
     }
+
+    @Override
+    public String usage() {
+        return "Add a task";
+    }
 }

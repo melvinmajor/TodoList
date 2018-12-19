@@ -15,7 +15,7 @@ public class ListAction implements Action {
 
     @Override
     public String getName() {
-        return "ls";
+        return "list";
     }
 
     @Override
@@ -54,6 +54,11 @@ public class ListAction implements Action {
     @Override
     public Command command() {
         return null;
+    }
+
+    @Override
+    public String usage() {
+        return "List all tasks";
     }
 
 }

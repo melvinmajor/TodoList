@@ -8,12 +8,17 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class RemoveAction extends EditAction {
     @Override
     public String getName() {
-        return "rm";
+        return "remove";
     }
 
     @Override
     public Command command() {
         return Command.REMOVE;
+    }
+
+    @Override
+    public String usage() {
+        return "Remove a task";
     }
 
     @Override

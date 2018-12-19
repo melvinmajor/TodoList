@@ -22,4 +22,9 @@ public class CompleteAction extends EditAction {
     public Command command() {
         return Command.EDIT;
     }
+
+    @Override
+    public String usage() {
+        return "Complete a task";
+    }
 }

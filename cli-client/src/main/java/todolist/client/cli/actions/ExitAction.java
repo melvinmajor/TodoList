@@ -18,4 +18,9 @@ public class ExitAction implements Action {
     public Command command() {
         return null;
     }
+
+    @Override
+    public String usage() {
+        return "Exit the program";
+    }
 }

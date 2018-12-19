@@ -11,4 +11,6 @@ public interface Action {
 
     Command command();
 
+    String usage();
+
 }
