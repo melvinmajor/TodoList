@@ -18,10 +18,6 @@ import static todolist.client.cli.parsing.Parsers.actionParser;
 public class CLIClient extends BaseClient {
     public static final CLIClient instance = new CLIClient();
 
-    private final Comparator<Task> comparator = Comparator
-            .<Task, LocalDate>comparing(t -> t.dueDate, Comparator.nullsLast(Comparator.naturalOrder()))
-            .thenComparing(t -> t.importance, Comparator.nullsLast(Comparator.naturalOrder()));
-
     public static final List<Action> actions = List.of(
             new HelpAction(),
             new ListAction(),
@@ -82,10 +78,4 @@ public class CLIClient extends BaseClient {
         return tasks;
     }
 
-    @Override
-    public boolean onUpdate(Collection<Task> tasks) {
-        this.tasks = new ArrayList<>(tasks);
-        this.tasks.sort(comparator);
-        return false;
-    }
 }

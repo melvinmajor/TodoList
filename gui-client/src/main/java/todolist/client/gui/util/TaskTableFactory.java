@@ -5,9 +5,7 @@ import todolist.common.Task;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -18,11 +16,6 @@ public class TaskTableFactory {
     public static JTable createTable() {
         var header = new String[]{"Description", "Importance", "Completed", "Due"};
         var tasks = new ArrayList<>(GuiClient.instance.getTasks());
-
-        // TODO delegate to BaseClient
-        var a = Comparator.<Task, LocalDate>comparing(t -> t.dueDate, Comparator.nullsLast(Comparator.naturalOrder()))
-                .thenComparing(t -> t.importance, Comparator.nullsLast(Comparator.naturalOrder()));
-        tasks.sort(a);
 
         var data = generateData(tasks);
 

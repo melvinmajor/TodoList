@@ -7,10 +7,8 @@ import todolist.common.Task;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * a basic implementation of the Client interface
@@ -19,6 +17,10 @@ public abstract class BaseClient implements Client {
     private int port;
     private Connection<Collection<Task>> connection;
     protected List<Task> tasks;
+
+    private final Comparator<Task> comparator = Comparator
+            .<Task, LocalDate>comparing(t -> t.dueDate, Comparator.nullsLast(Comparator.naturalOrder()))
+            .thenComparing(t -> t.importance, Comparator.nullsLast(Comparator.naturalOrder()));
 
     @Override
     public void run() {
@@ -57,6 +59,7 @@ public abstract class BaseClient implements Client {
     @Override
     public boolean onUpdate(Collection<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
+        this.tasks.sort(comparator);
         return false;
     }
 
