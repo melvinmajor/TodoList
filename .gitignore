@@ -17,5 +17,4 @@ target/
 
 # Documents and other useless files
 *.pdf
-*.jar
 *.DS_Store
