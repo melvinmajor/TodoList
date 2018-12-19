@@ -1,1 +1,1 @@
-java -jar cli-client/target/cli-client-0.1-jar-with-dependencies.jar %*
+java -jar cli-client/target/cli-client-1.0-jar-with-dependencies.jar %*
