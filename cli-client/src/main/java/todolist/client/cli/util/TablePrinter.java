@@ -49,7 +49,7 @@ public class TablePrinter {
         for (int i = 0; i < colLength.length; i++) {
             var c = colLength[i];
             if (c == 0) continue;
-            int padding = i == 0 ? 1 : 2;
+            int padding = i == 0 || i == colLength.length - 1 ? 1 : 2;
             for (int j = 0; j < padding + c; j++) builder.append("─");
             if (i != colLength.length - 1) builder.append("┼");
         }
