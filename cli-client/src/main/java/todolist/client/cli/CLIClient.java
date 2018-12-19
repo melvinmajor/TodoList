@@ -35,7 +35,6 @@ public class CLIClient extends BaseClient {
     }
 
     private boolean shouldExit;
-    public final Scanner scanner = new Scanner(System.in);
 
     @Override
     public void run() {
