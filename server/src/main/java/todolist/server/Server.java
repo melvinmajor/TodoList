@@ -1,11 +1,11 @@
 package todolist.server;
 
-import todolist.common.Command;
 import todolist.common.Connection;
 import todolist.common.Packet;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +45,8 @@ public class Server {
     }
 
     private boolean handleAction(Packet packet) {
-        System.out.println("received command " + packet.command);
+        var now = LocalDateTime.now();
+        System.out.println("[" + now + "] received command " + packet.command);
         switch (packet.command) {
             case REMOVE:
                 taskManager.removeTask(packet.task);
@@ -56,10 +57,6 @@ public class Server {
                 break;
             case CLOSE:
                 return true;
-        }
-
-        if (packet.command != Command.INIT) {
-            // TODO save to file
         }
 
         updateClients();
