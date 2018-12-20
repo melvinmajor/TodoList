@@ -14,6 +14,7 @@
         <module>base-client</module>
         <module>cli-client</module>
         <module>gui-client</module>
+        <module>arg-parser</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -32,7 +33,6 @@
             </plugin>
         </plugins>
     </build>
-
 
     <dependencies>
         <dependency>
