@@ -21,7 +21,6 @@ class InternalArgParser {
 
     private void insertIfAbsentOrFail(String name, Option option, boolean shortName) {
         if (name == null) return;
-        name = shortName ? "-" + name : "--" + name;
         if (optionsByName.containsKey(name)) throw new IllegalArgumentException("Duplicate argument name");
         optionsByName.put(name, option);
     }

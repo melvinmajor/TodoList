@@ -1,6 +1,7 @@
 package todolist.server;
 
 import argparsing.ArgParser;
+import argparsing.Option;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,12 +24,21 @@ public class Main {
         var pathString = "server-config.cfg";
         var configPath = Path.of(pathString);
 
+        var helpFlg = newFlag("h", "help");
         var saveFlg = newFlag("s", "save");
         var portOpt = newOption("p", "port");
-        new ArgParser(portOpt, saveFlg)
+        new ArgParser(helpFlg, portOpt, saveFlg)
                 .addFileSource(pathString)
                 .addSource(args)
                 .parse();
+
+        if (helpFlg.isPresent()) {
+            System.out.println("Available commands:\n");
+            System.out.println(getHelpString(helpFlg) + " : Print this message");
+            System.out.println(getHelpString(saveFlg) + " : Save arguments to a file for next time");
+            System.out.println(getHelpString(portOpt) + " : Set the server port");
+            return;
+        }
 
         if (saveFlg.isPresent()) {
             var argsWithoutSaveFlag = Arrays.stream(args)
@@ -46,4 +56,12 @@ public class Main {
 
         new Server(port).run();
     }
+
+    private static String getHelpString(Option opt) {
+        if (opt.shortName != null && opt.longName == null) return opt.shortName;
+        if (opt.longName != null && opt.shortName == null) return opt.longName;
+
+        return opt.shortName + " | " + opt.longName;
+    }
+
 }

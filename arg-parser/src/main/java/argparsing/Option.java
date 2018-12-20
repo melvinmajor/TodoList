@@ -15,8 +15,8 @@ public class Option {
         if (shortName != null && shortName.length() != 1) throw new IllegalArgumentException();
         if (longName != null && longName.length() < 2) throw new IllegalArgumentException();
 
-        this.shortName = shortName;
-        this.longName = longName;
+        this.shortName = shortName == null ? null : "-" + shortName;
+        this.longName = longName == null ? null : "--" + longName;
         this.isFlag = isFlag;
     }
 
