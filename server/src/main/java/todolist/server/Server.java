@@ -1,5 +1,6 @@
 package todolist.server;
 
+import todolist.common.Command;
 import todolist.common.Connection;
 import todolist.common.Packet;
 import todolist.server.Logging.Logger;
@@ -20,6 +21,8 @@ public final class Server {
     public static final Logger logger = new Logger(Server.class);
     private ServerSocket socket;
 
+    private Configuration config = new Configuration(taskManager, "tasks.json");
+
     public void setAndEnableHttpPort(int port) {
         new Thread(() -> new JsonHttpServer(port).start()).start();
     }
@@ -36,9 +39,8 @@ public final class Server {
     }
 
     public void run() {
-        // TODO load from file
-
-        new Thread(this::waitForConnections).start();
+        config.restore();
+        new Thread(this::waitForConnections, "connection listener").start();
     }
 
     private void waitForConnections() {
@@ -72,6 +74,10 @@ public final class Server {
         }
 
         updateClients();
+
+        if (packet.command != Command.GET) {
+            new Thread(() -> config.save(), "config").start();
+        }
 
         return false;
     }
