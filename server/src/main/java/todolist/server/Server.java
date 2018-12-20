@@ -12,13 +12,22 @@ import java.util.List;
 /**
  * the server class
  */
-public class Server {
-    private final TaskManager taskManager = new TaskManager();
+public final class Server {
+    public static final Server instance = new Server();
+
+    protected final TaskManager taskManager = new TaskManager();
     private final List<Connection> connections = new ArrayList<>();
     public static final Logger logger = new Logger(Server.class);
     private ServerSocket socket;
 
-    public Server(int port) {
+    public void setAndEnableHttpPort(int port) {
+        new Thread(() -> new JsonHttpServer(port).start()).start();
+    }
+
+    private Server() {
+    }
+
+    public void setPort(int port) {
         try {
             socket = new ServerSocket(port);
         } catch (IOException e) {
@@ -46,7 +55,6 @@ public class Server {
     }
 
     private boolean handleAction(Packet packet) {
-
         var msg = "Received " + packet.command + " command";
         if (packet.task != null) msg += " with " + packet.task;
         logger.info(msg);
@@ -59,7 +67,7 @@ public class Server {
                 taskManager.addOrEditTask(packet.task);
                 break;
             case CLOSE:
-                logger.info("Exiting the server");
+                logger.info("A client disconnected");
                 return true;
         }
 
