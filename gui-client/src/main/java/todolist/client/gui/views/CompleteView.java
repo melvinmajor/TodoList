@@ -4,9 +4,10 @@ import todolist.client.gui.GuiClient;
 import todolist.common.Command;
 import todolist.common.Packet;
 import todolist.common.TaskBuilder;
-/**
- * 
- */
+
+    /**
+     *  This class is use by the user to mark a task as complete
+     */
 public class CompleteView extends EditView {
 
     public CompleteView() {
