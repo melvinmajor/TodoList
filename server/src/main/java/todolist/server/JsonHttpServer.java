@@ -1,7 +1,8 @@
-package todolist.server.Logging;
+package todolist.server;
 
 import com.sun.net.httpserver.HttpServer;
-import todolist.server.Server;
+import todolist.server.serialization.SerializableTask;
+import todolist.server.serialization.TaskSerialization;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -19,7 +20,7 @@ public class JsonHttpServer {
         try {
             httpServer = HttpServer.create(new InetSocketAddress(port), 0);
             httpServer.createContext("/tasks", exchange -> {
-                byte[] response = "test".getBytes();
+                byte[] response = getJsonTasks().getBytes();
                 exchange.sendResponseHeaders(200, response.length);
                 var outputStream = exchange.getResponseBody();
                 outputStream.write(response);
@@ -37,6 +38,15 @@ public class JsonHttpServer {
         Server.logger.info("Stopping http server @ port");
         httpServer.stop(2);
         Server.logger.info("Stopped http server @ port");
+    }
+
+    private String getJsonTasks() {
+        var tasks = Server.instance.taskManager.getTasks();
+        var serializableTasks = tasks.stream()
+                .map(SerializableTask::new)
+                .toArray(SerializableTask[]::new);
+
+        return TaskSerialization.toJson(serializableTasks);
     }
 
 }

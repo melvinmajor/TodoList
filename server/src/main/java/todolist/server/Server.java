@@ -2,7 +2,6 @@ package todolist.server;
 
 import todolist.common.Connection;
 import todolist.common.Packet;
-import todolist.server.Logging.JsonHttpServer;
 import todolist.server.Logging.Logger;
 
 import java.io.IOException;
@@ -13,8 +12,10 @@ import java.util.List;
 /**
  * the server class
  */
-public class Server {
-    private final TaskManager taskManager = new TaskManager();
+public final class Server {
+    public static final Server instance = new Server();
+
+    protected final TaskManager taskManager = new TaskManager();
     private final List<Connection> connections = new ArrayList<>();
     public static final Logger logger = new Logger(Server.class);
     private ServerSocket socket;
@@ -23,7 +24,10 @@ public class Server {
         new Thread(() -> new JsonHttpServer(port).start()).start();
     }
 
-    public Server(int port) {
+    private Server() {
+    }
+
+    public void setPort(int port) {
         try {
             socket = new ServerSocket(port);
         } catch (IOException e) {

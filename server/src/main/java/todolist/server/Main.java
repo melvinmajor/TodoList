@@ -65,10 +65,10 @@ public class Main {
 
         Server.logger.info("Starting the server @ " + port);
 
-        Server server = new Server(port);
-        server.run();
+        Server.instance.setPort(port);
+        Server.instance.run();
 
-        if (httpPortOtp.isPresent()) server.setAndEnableHttpPort(httpPort);
+        if (httpPortOtp.isPresent()) Server.instance.setAndEnableHttpPort(httpPort);
     }
 
     private static String getHelpString(Option opt) {
