@@ -2,6 +2,7 @@ package todolist.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import todolist.server.Logging.Logger;
 import todolist.server.serialization.SerializableTask;
 import todolist.server.serialization.TaskSerialization;
 
@@ -18,6 +19,8 @@ public class JsonHttpServer {
 
     private static final String HEADER_ALLOW = "Allow";
 
+    private final Logger logger = new Logger("HTTP server");
+
     private final int port;
     private HttpServer httpServer;
 
@@ -27,20 +30,22 @@ public class JsonHttpServer {
     }
 
     public void start() {
-        Server.logger.info("Starting http server @ port " + port);
+        logger.info("Starting http server @ port " + port);
         try {
             httpServer = HttpServer.create(new InetSocketAddress(port), 0);
             httpServer.createContext("/tasks", this::sendResponse);
             httpServer.setExecutor(null);
             httpServer.start();
-            Server.logger.info("Started http server @ port " + port);
+            logger.info("Started http server @ port " + port);
         } catch (IOException e) {
-            Server.logger.error(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
     private void sendResponse(HttpExchange exchange) throws IOException {
-        switch (exchange.getRequestMethod().toUpperCase()) {
+        String requestMethod = exchange.getRequestMethod().toUpperCase();
+        logger.info("received " + requestMethod + " request");
+        switch (requestMethod) {
             case METHOD_GET:
                 exchange.getResponseHeaders().set(HEADER_CONTENT_TYPE, JSON_CONTENT_TYPE);
                 var response = getJsonTasks().getBytes();
@@ -57,12 +62,13 @@ public class JsonHttpServer {
                 exchange.getResponseHeaders().set(HEADER_ALLOW, ALLOWED_METHODS);
                 exchange.sendResponseHeaders(405, -1);
         }
+
     }
 
     public void stop() {
-        Server.logger.info("Stopping http server @ port");
+        logger.info("Stopping http server @ port");
         httpServer.stop(2);
-        Server.logger.info("Stopped http server @ port");
+        logger.info("Stopped http server @ port");
     }
 
     private String getJsonTasks() {

@@ -26,7 +26,10 @@ public class Logger {
     }
 
     private void log(String msg, LogLevel logLevel) {
-        var out = "[" + LocalDateTime.now() + "]" + " [" + logLevel.name() + "] " + msg;
+        var out = LocalDateTime.now() + " "
+                + "[" + name + "] "
+                + logLevel.name() + " "
+                + msg;
 
         // TODO logFile ?
         System.out.println(out);
