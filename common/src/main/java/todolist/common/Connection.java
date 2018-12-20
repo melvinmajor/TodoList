@@ -42,6 +42,7 @@ public class Connection<T> {
         Runnable runnable = () -> {
             while (!socket.isClosed()) {
                 try {
+                    @SuppressWarnings("unchecked")
                     T obj = (T) in.readObject();
 
                     boolean exit = listenCallback.apply(obj);
