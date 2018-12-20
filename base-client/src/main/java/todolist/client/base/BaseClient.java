@@ -28,7 +28,7 @@ public abstract class BaseClient implements Client {
     public void run() {
         connect();
         connection.listen();
-        sendPacket(new Packet(Command.INIT, null));
+        sendPacket(new Packet(Command.GET, null));
     }
 
     private void connect() {

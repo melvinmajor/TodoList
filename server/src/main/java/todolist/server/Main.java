@@ -47,12 +47,15 @@ public class Main {
 
             try {
                 Files.writeString(configPath, argsWithoutSaveFlag);
+                Server.logger.info("saved '" + argsWithoutSaveFlag + "' to " + pathString);
             } catch (IOException e) {
-                e.printStackTrace();
+                Server.logger.error(e.getMessage());
             }
         }
 
         int port = portOpt.getOptionalInt().orElse(8002);
+
+        Server.logger.info("Starting the server @ " + port);
 
         new Server(port).run();
     }

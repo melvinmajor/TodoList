@@ -2,10 +2,10 @@ package todolist.server;
 
 import todolist.common.Connection;
 import todolist.common.Packet;
+import todolist.server.Logging.Logger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +15,14 @@ import java.util.List;
 public class Server {
     private final TaskManager taskManager = new TaskManager();
     private final List<Connection> connections = new ArrayList<>();
+    public static final Logger logger = new Logger(Server.class);
     private ServerSocket socket;
 
     public Server(int port) {
         try {
             socket = new ServerSocket(port);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -39,14 +40,16 @@ public class Server {
                 connections.add(connection);
                 connection.listen();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             }
         }
     }
 
     private boolean handleAction(Packet packet) {
-        var now = LocalDateTime.now();
-        System.out.println("[" + now + "] received command " + packet.command);
+
+        var msg = "Received " + packet.command + " command";
+        if (packet.task != null) msg += " with " + packet.task;
+        logger.info(msg);
         switch (packet.command) {
             case REMOVE:
                 taskManager.removeTask(packet.task);
@@ -56,6 +59,7 @@ public class Server {
                 taskManager.addOrEditTask(packet.task);
                 break;
             case CLOSE:
+                logger.info("Exiting the server");
                 return true;
         }
 
