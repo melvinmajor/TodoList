@@ -23,6 +23,7 @@ public class MainView implements View {
 
     @Override
     public void fill(Container container) {
+        
         var mainLayout = new GridBagLayout();
         mainLayout.columnWidths = new int[]{540, 0};
         mainLayout.rowHeights = new int[]{30, 271, 23, 0};
