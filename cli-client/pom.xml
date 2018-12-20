@@ -25,6 +25,11 @@
             <artifactId>jansi</artifactId>
             <version>1.17.1</version>
         </dependency>
+        <dependency>
+            <groupId>todolist</groupId>
+            <artifactId>arg-parser</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

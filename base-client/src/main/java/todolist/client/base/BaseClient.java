@@ -14,7 +14,9 @@ import java.util.*;
  * a basic implementation of the Client interface
  */
 public abstract class BaseClient implements Client {
+    private String host;
     private int port;
+
     private Connection<Collection<Task>> connection;
     protected List<Task> tasks;
 
@@ -31,7 +33,6 @@ public abstract class BaseClient implements Client {
 
     private void connect() {
         try {
-            String host = "localhost";
             Socket socket = new Socket(host, port);
             this.connection = new Connection<>(socket, this::onUpdate, this::onExit);
         } catch (IOException e) {
@@ -54,6 +55,10 @@ public abstract class BaseClient implements Client {
     @Override
     public void setPort(int port) {
         this.port = port;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
     @Override
