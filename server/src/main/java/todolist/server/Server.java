@@ -2,6 +2,7 @@ package todolist.server;
 
 import todolist.common.Connection;
 import todolist.common.Packet;
+import todolist.server.Logging.JsonHttpServer;
 import todolist.server.Logging.Logger;
 
 import java.io.IOException;
@@ -17,6 +18,10 @@ public class Server {
     private final List<Connection> connections = new ArrayList<>();
     public static final Logger logger = new Logger(Server.class);
     private ServerSocket socket;
+
+    public void setAndEnableHttpPort(int port) {
+        new Thread(() -> new JsonHttpServer(port).start()).start();
+    }
 
     public Server(int port) {
         try {
@@ -46,7 +51,6 @@ public class Server {
     }
 
     private boolean handleAction(Packet packet) {
-
         var msg = "Received " + packet.command + " command";
         if (packet.task != null) msg += " with " + packet.task;
         logger.info(msg);
@@ -59,7 +63,7 @@ public class Server {
                 taskManager.addOrEditTask(packet.task);
                 break;
             case CLOSE:
-                logger.info("Exiting the server");
+                logger.info("A client disconnected");
                 return true;
         }
 

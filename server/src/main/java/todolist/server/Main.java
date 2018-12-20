@@ -27,7 +27,8 @@ public class Main {
         var helpFlg = newFlag("h", "help");
         var saveFlg = newFlag("s", "save");
         var portOpt = newOption("p", "port");
-        new ArgParser(helpFlg, portOpt, saveFlg)
+        var httpPortOtp = newOption("H", "http-port");
+        new ArgParser(helpFlg, portOpt, saveFlg, httpPortOtp)
                 .addFileSource(pathString)
                 .addSource(args)
                 .parse();
@@ -37,6 +38,8 @@ public class Main {
             System.out.println(getHelpString(helpFlg) + " : Print this message");
             System.out.println(getHelpString(saveFlg) + " : Save arguments to a file for next time");
             System.out.println(getHelpString(portOpt) + " : Set the server port");
+            System.out.println(getHelpString(httpPortOtp) + " : Enables and set the http server port");
+
             return;
         }
 
@@ -55,9 +58,17 @@ public class Main {
 
         int port = portOpt.getOptionalInt().orElse(8002);
 
+        int httpPort = httpPortOtp.getOptionalInt().orElse(-1);
+
+        var httpFail = httpPort == -1 && httpPort == port;
+        if (httpFail) Server.logger.warn("Invalid http port or already in use: " + httpPort);
+
         Server.logger.info("Starting the server @ " + port);
 
-        new Server(port).run();
+        Server server = new Server(port);
+        server.run();
+
+        if (httpPortOtp.isPresent()) server.setAndEnableHttpPort(httpPort);
     }
 
     private static String getHelpString(Option opt) {
