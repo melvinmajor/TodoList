@@ -1,13 +1,11 @@
 package todolist.common;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class TaskBuilder {
     private int id;
     private String description;
     private Importance importance;
-    private LocalDate creationDate;
     private LocalDate dueDate;
     private boolean completed;
 
@@ -18,7 +16,6 @@ public class TaskBuilder {
         this.id = task.id;
         this.description = task.description;
         this.importance = task.importance;
-        this.creationDate = task.creationDate;
         this.dueDate = task.dueDate;
         this.completed = task.completed;
     }
@@ -35,11 +32,6 @@ public class TaskBuilder {
 
     public TaskBuilder setImportance(Importance importance) {
         this.importance = importance;
-        return this;
-    }
-
-    public TaskBuilder setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
         return this;
     }
 
@@ -60,7 +52,7 @@ public class TaskBuilder {
     public Task build() {
         if (!validate()) throw new IllegalStateException();
 
-        return new Task(id, description, importance, creationDate, dueDate, completed);
+        return new Task(id, description, importance, dueDate, completed);
     }
 
 }

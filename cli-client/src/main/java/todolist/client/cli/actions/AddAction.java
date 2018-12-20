@@ -68,9 +68,7 @@ public class AddAction implements Action {
                 .getOptional()
                 .ifPresent(builder::setImportance);
 
-        builder.setId(data.nextAvailableId)
-                .setCreationDate(LocalDate.now())
-                .build();
+        builder.setId(data.nextAvailableId).build();
 
         if (!builder.validate()) return false;
 

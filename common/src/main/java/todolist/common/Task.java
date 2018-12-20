@@ -11,15 +11,13 @@ public class Task implements Serializable {
     public final int id;
     public final String description;
     public final Importance importance;
-    public final LocalDate creationDate;
     public final LocalDate dueDate;
     public final boolean completed;
 
-    public Task(int id, String description, Importance importance, LocalDate creationDate, LocalDate dueDate, boolean completed) {
+    public Task(int id, String description, Importance importance, LocalDate dueDate, boolean completed) {
         this.id = id;
         this.description = description;
         this.importance = importance;
-        this.creationDate = creationDate;
         this.dueDate = dueDate;
         this.completed = completed;
     }
@@ -43,7 +41,6 @@ public class Task implements Serializable {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", importance=" + importance +
-                ", creation=" + creationDate +
                 ", due=" + dueDate +
                 ", completed=" + completed +
                 '}';
