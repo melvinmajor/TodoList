@@ -33,11 +33,8 @@ class TaskManager {
     + removeTask(task: Task): boolean 
 }
 
-!define t(x) x ..o Task
-t(Importance)
-
-!define tm(x) x ..o TaskManager
-tm(Task) 
+Importance .left.o Task
+TaskManager o.left. Task
 
 '========================================
 ' Liens avec les interfaces : héritage

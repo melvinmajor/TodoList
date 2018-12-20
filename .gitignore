@@ -15,7 +15,8 @@ target/
 .settings/
 .project
 
-# Documents and other useless files
+# Documents and useless files
+uml/plantuml\.jar
 *.pdf
 *.DS_Store
 
