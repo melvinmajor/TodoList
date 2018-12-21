@@ -14,7 +14,7 @@ import java.util.List;
 public class TaskTableFactory {
 
     public static JTable createTable() {
-        var header = new String[]{"Description", "Importance", "Completed", "Due"};
+        var header = new String[]{"Description", "Importance", "Due", "Completed" };
         var tasks = new ArrayList<>(GuiClient.instance.getTasks());
 
         var data = generateData(tasks);

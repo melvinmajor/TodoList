@@ -13,5 +13,5 @@ public class DeleteView extends EditView {
     public DeleteView() {
         super("Delete", t -> GuiClient.instance.sendPacket(new Packet(Command.REMOVE, t)));
     }
-
+    
 }
