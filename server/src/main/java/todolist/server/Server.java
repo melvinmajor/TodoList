@@ -3,7 +3,7 @@ package todolist.server;
 import todolist.common.Command;
 import todolist.common.Connection;
 import todolist.common.Packet;
-import todolist.server.Logging.Logger;
+import todolist.server.logging.Logger;
 
 import java.io.IOException;
 import java.net.ServerSocket;

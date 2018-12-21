@@ -1,7 +1,7 @@
 package todolist.server;
 
 import todolist.common.Task;
-import todolist.server.Logging.Logger;
+import todolist.server.logging.Logger;
 import todolist.server.serialization.SerializableTask;
 import todolist.server.serialization.TaskSerialization;
 

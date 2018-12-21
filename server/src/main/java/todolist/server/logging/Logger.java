@@ -1,4 +1,4 @@
-package todolist.server.Logging;
+package todolist.server.logging;
 
 import java.time.LocalDateTime;
 

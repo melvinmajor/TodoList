@@ -2,7 +2,7 @@ package todolist.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
-import todolist.server.Logging.Logger;
+import todolist.server.logging.Logger;
 import todolist.server.serialization.SerializableTask;
 import todolist.server.serialization.TaskSerialization;
 
