@@ -17,7 +17,6 @@ target/
 
 # Documents and useless files
 uml/plantuml\.jar
-*.pdf
 *.DS_Store
 
 # config files

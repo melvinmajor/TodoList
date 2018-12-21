@@ -1,4 +1,14 @@
-﻿# TodoList
+﻿---
+title: "Description du projet TodoList - Groupe 30"
+author:
+    - Melvin Campos Casares
+    - Maxime Liber
+    - Hubert Van De Walle
+date: 21 décembre 2018
+titlepage: true
+---
+
+# TodoList
 
 ## Our Team
 Our team is composed of 3 people :
@@ -8,8 +18,8 @@ Our team is composed of 3 people :
 
 ## GitHub
 
-Link to our repository : https://github.com/melvinmajor/TodoList
-Link to our Wiki : https://github.com/melvinmajor/TodoList/wiki
+- Link to our repository : <https://github.com/melvinmajor/TodoList>
+- Link to our Wiki : <https://github.com/melvinmajor/TodoList/wiki>
 
 ## What's our project ?
 
